@@ -1,0 +1,22 @@
+---
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const links = [
+  { href: '/projects', label: 'Projects' },
+  { href: '/about', label: 'About us' },
+  { href: '/contact', label: 'Contact' }
+];
+---
+<header class="nav">
+  <div class="nav-in">
+    <a class="brand" href="/">RAD DESIGNZ</a>
+    <nav aria-label="Main">
+      <ul class="nav-links">
+        {links.map(l => (
+          <li>
+            <a href={l.href} aria-current={path === l.href ? 'page' : undefined}>{l.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,65 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const filters = [
+  { key: 'all', label: 'All' },
+  { key: 'branding', label: 'Brand identity' },
+  { key: 'logo', label: 'Logo' },
+  { key: 'packaging', label: 'Packaging' },
+  { key: 'creative-direction', label: 'Creative direction' }
+];
+---
+<Base title="Projects — RAD DESIGNZ" description="Brand identity, logo, packaging and creative direction work by RAD DESIGNZ.">
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head"><h2>Projects</h2></div>
+
+      <div class="filters" role="group" aria-label="Filter projects by discipline">
+        {filters.map((f, i) => (
+          <button class="filter" data-filter={f.key} aria-pressed={i === 0 ? 'true' : 'false'}>{f.label}</button>
+        ))}
+      </div>
+
+      {projects.length === 0 ? (
+        <p class="empty">No projects published yet.</p>
+      ) : (
+        <div class="grid" id="project-grid">
+          {projects.map(p => (
+            <ProjectCard
+              href={`/projects/${p.id}`}
+              title={p.data.title}
+              cover={p.data.cover}
+              client={p.data.client}
+              year={p.data.year}
+              category={p.data.category}
+            />
+          ))}
+        </div>
+      )}
+      <p class="empty" id="no-results" hidden>Nothing in this discipline yet.</p>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.filter');
+  const cards = document.querySelectorAll<HTMLElement>('#project-grid .card');
+  const none = document.getElementById('no-results');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const key = btn.dataset.filter;
+      buttons.forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+      let visible = 0;
+      cards.forEach(card => {
+        const match = key === 'all' || card.dataset.category === key;
+        card.style.display = match ? '' : 'none';
+        if (match) visible++;
+      });
+      if (none) none.hidden = visible !== 0;
+    });
+  });
+</script>

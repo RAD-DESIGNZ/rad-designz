@@ -1,0 +1,52 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+
+const all = await getCollection('projects');
+const featured = all
+  .filter(p => p.data.featured)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 4);
+const shown = featured.length ? featured : all.sort((a, b) => a.data.order - b.data.order).slice(0, 4);
+---
+<Base title="RAD DESIGNZ — Brand identity, logo, packaging, creative direction">
+  <section class="hero">
+    <div class="wrap">
+      <h1>Rad<span>Designz</span></h1>
+      <p class="lede hero-lede">
+        Independent design studio. Brand identity, logo, packaging
+        and creative direction.
+      </p>
+      <div class="hero-actions">
+        <a class="btn" href="/projects">See the projects</a>
+        <a class="btn btn-ghost" href="/contact">Start a project</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Selected projects</h2>
+        <a href="/projects">All projects</a>
+      </div>
+      {shown.length === 0 ? (
+        <p class="empty">No projects published yet.</p>
+      ) : (
+        <div class="grid">
+          {shown.map(p => (
+            <ProjectCard
+              href={`/projects/${p.id}`}
+              title={p.data.title}
+              cover={p.data.cover}
+              client={p.data.client}
+              year={p.data.year}
+              category={p.data.category}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</Base>

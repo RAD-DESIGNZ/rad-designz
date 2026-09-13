@@ -1,0 +1,26 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  cover: string;
+  client: string;
+  year: number;
+  category: string;
+}
+const { href, title, cover, client, year, category } = Astro.props;
+const labels: Record<string, string> = {
+  'branding': 'Brand identity',
+  'logo': 'Logo',
+  'packaging': 'Packaging',
+  'creative-direction': 'Creative direction'
+};
+---
+<a class="card" href={href} data-category={category}>
+  <div class="card-img">
+    <img src={cover} alt={`Cover image for ${title}`} loading="lazy" width="800" height="600" />
+  </div>
+  <div class="card-body">
+    <h3>{title}</h3>
+    <p class="card-meta">{labels[category] ?? category} — {client}, {year}</p>
+  </div>
+</a>
