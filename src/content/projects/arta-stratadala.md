@@ -8,6 +8,6 @@ cover: /uploads/Logo Simbol .png
 gallery: []
 tools: []
 link: ''
-featured: false
+featured: true
 order: 100
 ---
