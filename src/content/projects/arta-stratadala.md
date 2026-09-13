@@ -5,7 +5,9 @@ client: Personal
 category: branding
 summary: ABOUT this project, haha
 cover: /uploads/Logo Simbol .png
-gallery: []
+gallery:
+  - /uploads/color fundal-100.jpg
+  - /uploads/Arta-Stradala-PatternJPG.jpg
 tools: []
 link: ''
 featured: true
