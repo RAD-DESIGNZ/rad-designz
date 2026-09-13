@@ -1,45 +1,28 @@
 ---
+import { getEntry, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
+
+const entry = await getEntry('pages', 'about');
+const d = entry!.data;
+const { Content } = await render(entry!);
 ---
-<Base title="About us — RAD DESIGNZ" description="RAD DESIGNZ is an independent design studio working on brand identity, logo design, packaging and creative direction.">
+<Base title={`${d.heading} — RAD DESIGNZ`} description={d.lede}>
   <section class="sec">
     <div class="wrap">
-      <div class="sec-head"><h2>About us</h2></div>
+      <div class="sec-head"><h2>{d.heading}</h2></div>
       <div class="split">
         <div>
-          <p class="lede">
-            RAD DESIGNZ is an independent design studio working on brand identity,
-            logo design, creative direction and packaging.
-          </p>
-          <p>
-            The name traces back to Radji, short for Ridjimiraril — a character in
-            Rolf de Heer&rsquo;s <em>Ten Canoes</em>, the first feature film shot entirely in
-            Australian Aboriginal languages. It is a story told inside another story,
-            where how the tale is told carries as much weight as what happens in it.
-            That is close to how we think about brands.
-          </p>
-          <p>
-            Since 2017 we have built identities, packaging, campaigns and product
-            interfaces for Samsung, STA Travel, Arable Protocol, Menspire and many
-            other brands, alongside startups, sports organisations and independent
-            businesses.
-          </p>
-          <p>
-            We also produce AI-assisted film under RAD SEQUENCE FILMS. Our short
-            <em>The Ash Witness</em> was an official selection at the Runway AI Film
-            Festival 2026.
-          </p>
-          <p>Based in Germany. Working in English and Romanian.</p>
+          <p class="lede">{d.lede}</p>
+          <Content />
         </div>
-        <aside class="panel">
-          <h3>What we do</h3>
-          <ul class="svc">
-            <li>Brand identity</li>
-            <li>Logo</li>
-            <li>Packaging</li>
-            <li>Creative direction</li>
-          </ul>
-        </aside>
+        {d.panel_items.length > 0 && (
+          <aside class="panel">
+            <h3>{d.panel_title}</h3>
+            <ul class="svc">
+              {d.panel_items.map(i => <li>{i}</li>)}
+            </ul>
+          </aside>
+        )}
       </div>
     </div>
   </section>

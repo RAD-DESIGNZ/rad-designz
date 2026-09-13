@@ -1,11 +1,12 @@
 ---
+import { getEntry } from 'astro:content';
+const contact = await getEntry('pages', 'contact');
+const email = contact?.data.email ?? '';
 const year = new Date().getFullYear();
 ---
 <footer class="foot">
   <div class="wrap foot-in">
     <p style="margin:0">RAD DESIGNZ &copy; {year}</p>
-    <p style="margin:0">
-      <a href="mailto:raddesignz.studio@gmail.com">raddesignz.studio@gmail.com</a>
-    </p>
+    {email && <p style="margin:0"><a href={`mailto:${email}`}>{email}</a></p>}
   </div>
 </footer>

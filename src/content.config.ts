@@ -18,4 +18,18 @@ const projects = defineCollection({
   })
 });
 
-export const collections = { projects };
+const pages = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/pages' }),
+  schema: z.object({
+    heading: z.string(),
+    lede: z.string(),
+    panel_title: z.string().default(''),
+    panel_items: z.array(z.string()).default([]),
+    email: z.string().default(''),
+    instagram: z.string().default(''),
+    behance: z.string().default(''),
+    linktree: z.string().default('')
+  })
+});
+
+export const collections = { projects, pages };

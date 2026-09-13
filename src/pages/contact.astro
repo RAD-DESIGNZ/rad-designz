@@ -1,31 +1,36 @@
 ---
+import { getEntry } from 'astro:content';
 import Base from '../layouts/Base.astro';
+
+const entry = await getEntry('pages', 'contact');
+const d = entry!.data;
+
+const links = [
+  { href: d.instagram, label: 'Instagram' },
+  { href: d.behance, label: 'Behance' },
+  { href: d.linktree, label: 'Linktree' }
+].filter(l => l.href);
 ---
-<Base title="Contact — RAD DESIGNZ" description="Get in touch with RAD DESIGNZ about a brand identity, logo, packaging or creative direction project.">
+<Base title={`${d.heading} — RAD DESIGNZ`} description={d.lede}>
   <section class="sec">
     <div class="wrap">
-      <div class="sec-head"><h2>Contact</h2></div>
+      <div class="sec-head"><h2>{d.heading}</h2></div>
       <div class="split">
         <div>
-          <p class="lede">
-            Tell us what you are building, who it is for, and when you need it.
-          </p>
+          <p class="lede">{d.lede}</p>
           <ul class="contact-list">
-            <li><a href="mailto:raddesignz.studio@gmail.com">raddesignz.studio@gmail.com</a></li>
-            <li><a href="https://instagram.com/raddesignz" rel="me noopener">Instagram</a></li>
-            <li><a href="https://behance.net/raddesignz" rel="me noopener">Behance</a></li>
-            <li><a href="https://linktr.ee/raddesignz" rel="me noopener">Linktree</a></li>
+            {d.email && <li><a href={`mailto:${d.email}`}>{d.email}</a></li>}
+            {links.map(l => <li><a href={l.href} rel="me noopener">{l.label}</a></li>)}
           </ul>
         </div>
-        <aside class="panel">
-          <h3>Useful in a first message</h3>
-          <ul class="svc">
-            <li>What the project is</li>
-            <li>Who the audience is</li>
-            <li>Deadline</li>
-            <li>Budget range</li>
-          </ul>
-        </aside>
+        {d.panel_items.length > 0 && (
+          <aside class="panel">
+            <h3>{d.panel_title}</h3>
+            <ul class="svc">
+              {d.panel_items.map(i => <li>{i}</li>)}
+            </ul>
+          </aside>
+        )}
       </div>
     </div>
   </section>

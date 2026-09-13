@@ -68,11 +68,12 @@ img { max-width: 100%; display: block; height: auto; }
 
 /* ---------- nav ---------- */
 .nav { border-bottom: 3px solid var(--violet); background: var(--ink); position: sticky; top: 0; z-index: 50; }
-.nav-in { max-width: var(--max); margin-inline: auto; padding: 1rem var(--gutter);
+.nav-in { max-width: var(--max); margin-inline: auto; padding: .7rem var(--gutter);
   display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
-.brand { font-family: var(--display); font-size: 1.15rem; text-transform: uppercase;
-  color: var(--purple); text-decoration: none; letter-spacing: .02em; }
-.brand:hover { color: var(--pop); }
+.brand { display: block; line-height: 0; text-decoration: none; }
+.brand img { height: 64px; width: auto; transition: transform .12s ease; }
+.brand:hover img { transform: translate(1px, 1px); }
+@media (max-width: 560px) { .brand img { height: 48px; } }
 .nav-links { display: flex; gap: 1.5rem; list-style: none; margin: 0; padding: 0; }
 .nav-links a { font-family: var(--display); font-size: .8rem; text-transform: uppercase;
   color: #F2F2F5; text-decoration: none; letter-spacing: .06em; }
