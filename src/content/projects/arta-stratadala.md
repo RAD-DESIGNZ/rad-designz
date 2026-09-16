@@ -16,16 +16,6 @@ gallery:
   - /uploads/Artboard 3-100.jpg
   - /uploads/Artboard 4-100.jpg
   - /uploads/Artboard 5-100.jpg
-  - /uploads/Artboard 6-100.jpg
-  - /uploads/Artboard 11-100.jpg
-  - /uploads/Artboard 13-100.jpg
-  - /uploads/Artboard 14-100.jpg
-  - /uploads/Artboard 15-100.jpg
-  - /uploads/Artboard 16-100.jpg
-  - /uploads/Artboard 17-100.jpg
-  - /uploads/Artboard 18-100.jpg
-  - /uploads/Artboard 19-100.jpg
-  - /uploads/Artboard 20-100.jpg
 tools: []
 link: ''
 featured: true
