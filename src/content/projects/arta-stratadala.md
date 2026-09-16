@@ -10,12 +10,7 @@ summary: |-
 
   Alongside the core brand identity, we created a custom icon set and graphic pattern system, giving Arta Stradala a distinctive visual language that can expand across different applications while keeping the brand instantly recognizable.
 cover: /uploads/Untitled-2.jpg
-gallery:
-  - /uploads/Artboard 1-100.jpg
-  - /uploads/Artboard 2-100.jpg
-  - /uploads/Artboard 3-100.jpg
-  - /uploads/Artboard 4-100.jpg
-  - /uploads/Artboard 5-100.jpg
+gallery: []
 tools: []
 link: ''
 featured: true
