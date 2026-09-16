@@ -1,5 +1,5 @@
 ---
-title: Dvision
+title: Dvision - Cut To Create
 year: 2021
 client: Dvision Studio
 category: branding
