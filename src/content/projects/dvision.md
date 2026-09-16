@@ -7,6 +7,8 @@ summary: Dvision is a contemporary men’s style and grooming brand built around
 cover: /uploads/Dvision2020_white.png
 gallery:
   - /uploads/business-card-dvision.jpg
+  - /uploads/Dvision Shampoo.jpg
+  - /uploads/Dvision-cape-mockup-final.jpg
 tools: []
 link: www.dvision.studio
 featured: true
