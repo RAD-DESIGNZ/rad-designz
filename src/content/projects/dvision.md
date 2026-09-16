@@ -9,6 +9,7 @@ gallery:
   - /uploads/dvision-logowhite.jpg
   - /uploads/business-card-dvision.jpg
   - /uploads/Dvision Shampoo.jpg
+  - /uploads/Dvision-cape-mockup-s.jpg
 tools: []
 link: www.dvision.studio
 featured: true
