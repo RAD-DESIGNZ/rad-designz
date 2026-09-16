@@ -8,7 +8,7 @@ cover: /uploads/11 Gardens logo-100.jpg
 gallery:
   - /uploads/11 Gardens logo-100.jpg
   - /uploads/Logo-Variations-1.jpg
-  - /uploads/11-Garden-Mockup2.jpg
+  - /uploads/11-Garden-Mockup2-1.jpg
   - /uploads/11-Garden---Business-Card-Mockup.jpg
   - /uploads/11-Garden-mockup.-posterjpg.jpg
 tools: []
