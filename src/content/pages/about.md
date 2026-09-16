@@ -1,6 +1,6 @@
 ---
 heading: About us
-lede: RAD DESIGNZ is an independent design studio working on brand identity, logo design, creative direction and packaging.
+lede: RAD DESIGNZ is an independent design studio working on brand identity, logo design, creative direction and packaging. Tra la la
 panel_title: What we do
 panel_items:
   - Brand identity
