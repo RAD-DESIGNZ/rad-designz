@@ -13,6 +13,6 @@ gallery:
   - /uploads/11-Garden-mockup.-posterjpg.jpg
 tools: []
 link: ''
-featured: false
+featured: true
 order: 100
 ---
