@@ -1,5 +1,8 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { CATEGORY_VALUES } from './lib/categories';
+
+const discipline = z.enum(CATEGORY_VALUES);
 
 const projects = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
@@ -7,7 +10,9 @@ const projects = defineCollection({
     title: z.string(),
     year: z.number(),
     client: z.string().default('Personal'),
-    category: z.enum(['branding', 'logo', 'creative-direction', 'packaging']),
+    // Accepts a single value (older entries) or a list (new entries).
+    category: z.union([discipline, z.array(discipline).min(1)])
+      .transform(v => (Array.isArray(v) ? v : [v])),
     summary: z.string(),
     cover: z.string(),
     gallery: z.array(z.string()).default([]),

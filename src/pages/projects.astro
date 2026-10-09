@@ -2,18 +2,22 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import { CATEGORIES } from '../lib/categories';
 
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+
 const filters = [
   { key: 'all', label: 'All' },
-  { key: 'branding', label: 'Brand identity' },
-  { key: 'logo', label: 'Logo' },
-  { key: 'packaging', label: 'Packaging' },
-  { key: 'creative-direction', label: 'Creative direction' }
+  ...CATEGORIES.map(c => ({ key: c.value, label: c.label }))
 ];
 ---
 <Base title="Projects — RAD DESIGNZ" description="Brand identity, logo, packaging and creative direction work by RAD DESIGNZ.">
   <section class="sec">
+    <div class="deco" aria-hidden="true">
+      <span class="ring" style="color:var(--pink);width:170px;height:170px;right:4%;top:4%"></span>
+      <span class="disc" style="color:var(--purple);width:180px;height:180px;left:-60px;top:34%"></span>
+      <span class="ring" style="color:var(--lavender);width:70px;height:70px;right:14%;bottom:6%"></span>
+    </div>
     <div class="wrap">
       <div class="sec-head"><h2>Projects</h2></div>
 
@@ -34,7 +38,7 @@ const filters = [
               cover={p.data.cover}
               client={p.data.client}
               year={p.data.year}
-              category={p.data.category}
+              categories={p.data.category}
             />
           ))}
         </div>
@@ -55,7 +59,8 @@ const filters = [
       buttons.forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
       let visible = 0;
       cards.forEach(card => {
-        const match = key === 'all' || card.dataset.category === key;
+        const own = (card.dataset.category ?? '').split(' ').filter(Boolean);
+        const match = key === 'all' || own.includes(key!);
         card.style.display = match ? '' : 'none';
         if (match) visible++;
       });

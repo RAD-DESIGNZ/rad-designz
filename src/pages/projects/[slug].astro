@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import { labelFor, sortCategories } from '../../lib/categories';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -10,13 +11,7 @@ export async function getStaticPaths() {
 const { project } = Astro.props;
 const d = project.data;
 const { Content } = await render(project);
-
-const labels: Record<string, string> = {
-  'branding': 'Brand identity',
-  'logo': 'Logo',
-  'packaging': 'Packaging',
-  'creative-direction': 'Creative direction'
-};
+const disciplines = sortCategories(d.category).map(labelFor);
 ---
 <Base title={`${d.title} — RAD DESIGNZ`} description={d.summary}>
   <article>
@@ -29,7 +24,10 @@ const labels: Record<string, string> = {
         <dl class="proj-facts">
           <div class="fact"><dt>Client</dt><dd>{d.client}</dd></div>
           <div class="fact"><dt>Year</dt><dd>{d.year}</dd></div>
-          <div class="fact"><dt>Discipline</dt><dd>{labels[d.category] ?? d.category}</dd></div>
+          <div class="fact">
+            <dt>{disciplines.length > 1 ? 'Disciplines' : 'Discipline'}</dt>
+            <dd>{disciplines.join(', ')}</dd>
+          </div>
           {d.tools.length > 0 && (
             <div class="fact"><dt>Tools</dt><dd>{d.tools.join(', ')}</dd></div>
           )}
@@ -44,7 +42,6 @@ const labels: Record<string, string> = {
     <div class="proj-body">
       <div class="wrap">
         <Content />
-
         {d.gallery.length > 0 && (
           <div class="gallery">
             {d.gallery.map((src, i) => (

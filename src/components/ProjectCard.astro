@@ -1,26 +1,24 @@
 ---
+import { labelFor, sortCategories } from '../lib/categories';
+
 interface Props {
   href: string;
   title: string;
   cover: string;
   client: string;
   year: number;
-  category: string;
+  categories: string[];
 }
-const { href, title, cover, client, year, category } = Astro.props;
-const labels: Record<string, string> = {
-  'branding': 'Brand identity',
-  'logo': 'Logo',
-  'packaging': 'Packaging',
-  'creative-direction': 'Creative direction'
-};
+const { href, title, cover, client, year, categories } = Astro.props;
+const ordered = sortCategories(categories);
+const labels = ordered.map(labelFor).join(' · ');
 ---
-<a class="card" href={href} data-category={category}>
+<a class="card" href={href} data-category={ordered.join(' ')}>
   <div class="card-img">
     <img src={cover} alt={`Cover image for ${title}`} loading="lazy" width="800" height="600" />
   </div>
   <div class="card-body">
     <h3>{title}</h3>
-    <p class="card-meta">{labels[category] ?? category} — {client}, {year}</p>
+    <p class="card-meta">{labels} — {client}, {year}</p>
   </div>
 </a>

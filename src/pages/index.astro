@@ -12,6 +12,12 @@ const shown = featured.length ? featured : all.sort((a, b) => a.data.order - b.d
 ---
 <Base title="RAD DESIGNZ — Brand identity, logo, packaging, creative direction">
   <section class="hero">
+    <div class="deco" aria-hidden="true">
+      <span class="ring" style="color:var(--pink);width:190px;height:190px;right:6%;top:8%"></span>
+      <span class="ring" style="color:var(--purple);width:110px;height:110px;right:22%;top:46%"></span>
+      <span class="disc" style="color:var(--pink);width:150px;height:150px;left:-40px;bottom:12%"></span>
+      <span class="ring" style="color:var(--lavender);width:64px;height:64px;right:11%;bottom:14%"></span>
+    </div>
     <div class="wrap">
       <h1>Rad<span>Designz</span></h1>
       <p class="lede hero-lede">
@@ -26,6 +32,10 @@ const shown = featured.length ? featured : all.sort((a, b) => a.data.order - b.d
   </section>
 
   <section class="sec">
+    <div class="deco" aria-hidden="true">
+      <span class="disc" style="color:var(--purple);width:210px;height:210px;right:-70px;top:14%"></span>
+      <span class="ring" style="color:var(--pink);width:90px;height:90px;left:3%;bottom:8%"></span>
+    </div>
     <div class="wrap">
       <div class="sec-head">
         <h2>Selected projects</h2>
@@ -42,7 +52,7 @@ const shown = featured.length ? featured : all.sort((a, b) => a.data.order - b.d
               cover={p.data.cover}
               client={p.data.client}
               year={p.data.year}
-              category={p.data.category}
+              categories={p.data.category}
             />
           ))}
         </div>

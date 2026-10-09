@@ -21,15 +21,25 @@ collections:
       - { name: "year", label: "Year", widget: "number", value_type: "int", min: 2000, max: 2100, default: 2026 }
       - { name: "client", label: "Client", widget: "string", default: "Personal" }
       - name: "category"
-        label: "Discipline"
+        label: "Disciplines"
         widget: "select"
+        multiple: true
+        min: 1
+        hint: "Pick every discipline this project involved. Filters on the Projects page appear only for disciplines that are actually used."
         options:
           - { label: "Brand identity", value: "branding" }
           - { label: "Logo", value: "logo" }
           - { label: "Packaging", value: "packaging" }
           - { label: "Creative direction", value: "creative-direction" }
+          - { label: "Print design", value: "print" }
+          - { label: "UI/UX design", value: "ui-ux" }
+          - { label: "Visual design", value: "visual" }
+          - { label: "Illustration", value: "illustration" }
+          - { label: "Web design", value: "web" }
+          - { label: "Social media design", value: "social-media" }
+          - { label: "Editorial design", value: "editorial" }
       - { name: "summary", label: "Short description", widget: "text", hint: "One or two sentences. Shown under the title." }
-      - { name: "cover", label: "Cover image", widget: "image", hint: "Max 2000px wide, under 500KB, JPG." }
+      - { name: "cover", label: "Cover image", widget: "image", hint: "Max 2000px wide, under 500KB." }
       - { name: "gallery", label: "Gallery", widget: "list", field: { name: "image", label: "Image", widget: "image" }, required: false }
       - { name: "tools", label: "Tools", widget: "list", required: false }
       - { name: "link", label: "External link", widget: "string", required: false }
