@@ -30,6 +30,6 @@ gallery:
   - /uploads/ourofspacebooking-poster.webp
 tools: []
 link: ''
-featured: false
+featured: true
 order: 100
 ---
