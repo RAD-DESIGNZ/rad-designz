@@ -186,6 +186,7 @@ img { max-width: 100%; display: block; height: auto; }
   box-shadow: 8px 8px 0 var(--violet);
   padding: .4rem;
 }
+.filter-panel[hidden] { display: none; }
 .filter-opt {
   text-align: left; font-family: var(--display); font-size: .74rem;
   text-transform: uppercase; letter-spacing: .05em;
