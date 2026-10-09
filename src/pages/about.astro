@@ -1,6 +1,7 @@
 ---
 import { getEntry, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import { CATEGORIES } from '../lib/categories';
 
 const entry = await getEntry('pages', 'about');
 const d = entry!.data;
@@ -8,6 +9,10 @@ const { Content } = await render(entry!);
 ---
 <Base title={`${d.heading} — RAD DESIGNZ`} description={d.lede}>
   <section class="sec">
+    <div class="deco" aria-hidden="true">
+      <span class="ring" style="color:var(--pink);width:160px;height:160px;right:5%;top:6%"></span>
+      <span class="disc" style="color:var(--purple);width:170px;height:170px;left:-60px;bottom:10%"></span>
+    </div>
     <div class="wrap">
       <div class="sec-head"><h2>{d.heading}</h2></div>
       <div class="split">
@@ -15,14 +20,14 @@ const { Content } = await render(entry!);
           <p class="lede">{d.lede}</p>
           <Content />
         </div>
-        {d.panel_items.length > 0 && (
-          <aside class="panel">
-            <h3>{d.panel_title}</h3>
-            <ul class="svc">
-              {d.panel_items.map(i => <li>{i}</li>)}
-            </ul>
-          </aside>
-        )}
+        <aside class="panel">
+          <h3>{d.panel_title || 'What we do'}</h3>
+          <ul class="svc svc-links">
+            {CATEGORIES.map(c => (
+              <li><a href={`/projects?d=${c.value}`}>{c.label}</a></li>
+            ))}
+          </ul>
+        </aside>
       </div>
     </div>
   </section>

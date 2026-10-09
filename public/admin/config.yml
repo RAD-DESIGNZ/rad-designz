@@ -74,8 +74,7 @@ collections:
         fields:
           - { name: "heading", label: "Page heading", widget: "string" }
           - { name: "lede", label: "Opening paragraph", widget: "text" }
-          - { name: "panel_title", label: "Side box title", widget: "string", required: false }
-          - { name: "panel_items", label: "Side box list", widget: "list", required: false }
+          - { name: "panel_title", label: "Side box title", widget: "string", required: false, hint: "The list underneath is generated from the disciplines automatically." }
           - { name: "body", label: "Main text", widget: "markdown" }
 
       - name: "contact"

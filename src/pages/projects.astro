@@ -110,5 +110,16 @@ const filters = [
     if (e.key === 'Escape' && panel && !panel.hidden) { setOpen(false); toggle?.focus(); }
   });
 
-  apply('all', 'All');
+  // Arriving from About: /projects?d=branding pre-selects that discipline.
+  const wanted = new URLSearchParams(location.search).get('d');
+  const preset = wanted
+    ? Array.from(opts).find(o => o.dataset.filter === wanted)
+    : undefined;
+
+  if (preset) {
+    opts.forEach(o => o.setAttribute('aria-selected', String(o === preset)));
+    apply(preset.dataset.filter ?? 'all', preset.textContent ?? 'All');
+  } else {
+    apply('all', 'All');
+  }
 </script>
