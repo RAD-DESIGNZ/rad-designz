@@ -21,10 +21,21 @@ const filters = [
     <div class="wrap">
       <div class="sec-head"><h2>Projects</h2></div>
 
-      <div class="filters" role="group" aria-label="Filter projects by discipline">
-        {filters.map((f, i) => (
-          <button class="filter" data-filter={f.key} aria-pressed={i === 0 ? 'true' : 'false'}>{f.label}</button>
-        ))}
+      <div class="filter-bar">
+        <div class="filter-wrap">
+          <button class="filter-toggle" id="filter-toggle" aria-expanded="false" aria-controls="filter-panel">
+            <span class="ft-key">Discipline</span>
+            <span class="ft-val" id="filter-current">All</span>
+            <span class="ft-caret" aria-hidden="true"></span>
+          </button>
+          <div class="filter-panel" id="filter-panel" role="listbox" aria-label="Filter projects by discipline" hidden>
+            {filters.map((f, i) => (
+              <button class="filter-opt" role="option" data-filter={f.key}
+                      aria-selected={i === 0 ? 'true' : 'false'}>{f.label}</button>
+            ))}
+          </div>
+        </div>
+        <p class="filter-count" id="filter-count"></p>
       </div>
 
       {projects.length === 0 ? (
@@ -49,22 +60,55 @@ const filters = [
 </Base>
 
 <script>
-  const buttons = document.querySelectorAll<HTMLButtonElement>('.filter');
+  const toggle = document.getElementById('filter-toggle') as HTMLButtonElement | null;
+  const panel = document.getElementById('filter-panel');
+  const current = document.getElementById('filter-current');
+  const count = document.getElementById('filter-count');
+  const opts = document.querySelectorAll<HTMLButtonElement>('.filter-opt');
   const cards = document.querySelectorAll<HTMLElement>('#project-grid .card');
   const none = document.getElementById('no-results');
 
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const key = btn.dataset.filter;
-      buttons.forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
-      let visible = 0;
-      cards.forEach(card => {
-        const own = (card.dataset.category ?? '').split(' ').filter(Boolean);
-        const match = key === 'all' || own.includes(key!);
-        card.style.display = match ? '' : 'none';
-        if (match) visible++;
-      });
-      if (none) none.hidden = visible !== 0;
+  const setOpen = (open: boolean) => {
+    if (!panel || !toggle) return;
+    panel.hidden = !open;
+    toggle.setAttribute('aria-expanded', String(open));
+  };
+
+  const apply = (key: string, label: string) => {
+    let visible = 0;
+    cards.forEach(card => {
+      const own = (card.dataset.category ?? '').split(' ').filter(Boolean);
+      const match = key === 'all' || own.includes(key);
+      card.style.display = match ? '' : 'none';
+      if (match) visible++;
+    });
+    if (current) current.textContent = label;
+    if (none) none.hidden = visible !== 0;
+    if (count) count.textContent = visible === cards.length
+      ? `${cards.length} project${cards.length === 1 ? '' : 's'}`
+      : `${visible} of ${cards.length}`;
+  };
+
+  toggle?.addEventListener('click', () => setOpen(panel?.hidden ?? false));
+
+  opts.forEach(opt => {
+    opt.addEventListener('click', () => {
+      opts.forEach(o => o.setAttribute('aria-selected', String(o === opt)));
+      apply(opt.dataset.filter ?? 'all', opt.textContent ?? 'All');
+      setOpen(false);
+      toggle?.focus();
     });
   });
+
+  document.addEventListener('click', e => {
+    if (!panel || panel.hidden) return;
+    if (!(e.target as Node).parentElement?.closest('.filter-wrap')
+        && !(e.target as Element)?.closest?.('.filter-wrap')) setOpen(false);
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && panel && !panel.hidden) { setOpen(false); toggle?.focus(); }
+  });
+
+  apply('all', 'All');
 </script>

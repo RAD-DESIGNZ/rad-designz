@@ -7,6 +7,19 @@ publish_mode: simple
 media_folder: "public/uploads"
 public_folder: "/uploads"
 
+# Images are optimised in the browser before upload: converted to WebP,
+# resized to fit 2000px, and the filename is slugified.
+media_libraries:
+  default:
+    config:
+      slugify_filename: true
+      transformations:
+        raster_image:
+          format: webp
+          quality: 82
+          width: 2000
+          height: 2000
+
 collections:
   - name: "projects"
     label: "Projects"
@@ -39,8 +52,13 @@ collections:
           - { label: "Social media design", value: "social-media" }
           - { label: "Editorial design", value: "editorial" }
       - { name: "summary", label: "Short description", widget: "text", hint: "One or two sentences. Shown under the title." }
-      - { name: "cover", label: "Cover image", widget: "image", hint: "Max 2000px wide, under 500KB." }
-      - { name: "gallery", label: "Gallery", widget: "list", field: { name: "image", label: "Image", widget: "image" }, required: false }
+      - { name: "cover", label: "Cover image", widget: "image", hint: "Any size — it is resized and converted automatically on upload." }
+      - name: "gallery"
+        label: "Gallery"
+        widget: "image"
+        multiple: true
+        required: false
+        hint: "Drag several images in at once. Drag the handle on the left of each one to reorder."
       - { name: "tools", label: "Tools", widget: "list", required: false }
       - { name: "link", label: "External link", widget: "string", required: false }
       - { name: "featured", label: "Show on homepage", widget: "boolean", default: false }
