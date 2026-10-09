@@ -12,6 +12,7 @@ const { project } = Astro.props;
 const d = project.data;
 const { Content } = await render(project);
 const disciplines = sortCategories(d.category).map(labelFor);
+
 ---
 <Base title={`${d.title} — RAD DESIGNZ`} description={d.summary}>
   <article>
@@ -42,6 +43,7 @@ const disciplines = sortCategories(d.category).map(labelFor);
     <div class="proj-body">
       <div class="wrap">
         <Content />
+
         {d.gallery.length > 0 && (
           <div class="gallery">
             {d.gallery.map((src, i) => (
