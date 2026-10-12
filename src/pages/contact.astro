@@ -5,11 +5,6 @@ import Base from '../layouts/Base.astro';
 const entry = await getEntry('pages', 'contact');
 const d = entry!.data;
 
-const links = [
-  { href: d.instagram, label: 'Instagram' },
-  { href: d.behance, label: 'Behance' },
-  { href: d.linktree, label: 'Linktree' }
-].filter(l => l.href);
 ---
 <Base title={`${d.heading} — RAD DESIGNZ`} description={d.lede}>
   <section class="sec">
@@ -20,7 +15,7 @@ const links = [
           <p class="lede">{d.lede}</p>
           <ul class="contact-list">
             {d.email && <li><a href={`mailto:${d.email}`}>{d.email}</a></li>}
-            {links.map(l => <li><a href={l.href} rel="me noopener">{l.label}</a></li>)}
+            {d.behance && <li><a href={d.behance} rel="me noopener" target="_blank">Behance</a></li>}
           </ul>
         </div>
         {d.panel_items.length > 0 && (

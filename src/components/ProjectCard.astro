@@ -5,11 +5,10 @@ interface Props {
   href: string;
   title: string;
   cover: string;
-  client: string;
   year: number;
   categories: string[];
 }
-const { href, title, cover, client, year, categories } = Astro.props;
+const { href, title, cover, year, categories } = Astro.props;
 const ordered = sortCategories(categories);
 const labels = ordered.map(labelFor).join(' · ');
 ---
@@ -19,6 +18,6 @@ const labels = ordered.map(labelFor).join(' · ');
   </div>
   <div class="card-body">
     <h3>{title}</h3>
-    <p class="card-meta">{labels} — {client}, {year}</p>
+    <p class="card-meta">{labels} — {year}</p>
   </div>
 </a>

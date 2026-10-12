@@ -13,6 +13,16 @@ const d = project.data;
 const { Content } = await render(project);
 const disciplines = sortCategories(d.category).map(labelFor);
 
+/** "domnulics.ro" -> "https://domnulics.ro". Plain words like "Personal" stay text. */
+const asUrl = (v: string): string | null => {
+  const t = v.trim();
+  if (/^https?:\/\//i.test(t)) return t;
+  if (/^(www\.)?[\w-]+(\.[\w-]+)+(\/\S*)?$/.test(t)) return `https://${t}`;
+  return null;
+};
+const siteUrl = asUrl(d.client);
+const siteLabel = d.client.trim().replace(/^https?:\/\//i, '').replace(/\/$/, '');
+
 ---
 <Base title={`${d.title} — RAD DESIGNZ`} description={d.summary}>
   <article>
@@ -23,7 +33,12 @@ const disciplines = sortCategories(d.category).map(labelFor);
         <p class="lede" style="margin-top:1.25rem">{d.summary}</p>
 
         <dl class="proj-facts">
-          <div class="fact"><dt>Client</dt><dd>{d.client}</dd></div>
+          {siteUrl && (
+            <div class="fact">
+              <dt>Site</dt>
+              <dd><a class="site-link" href={siteUrl} target="_blank" rel="noopener">{siteLabel}</a></dd>
+            </div>
+          )}
           <div class="fact"><dt>Year</dt><dd>{d.year}</dd></div>
           <div class="fact">
             <dt>{disciplines.length > 1 ? 'Disciplines' : 'Discipline'}</dt>

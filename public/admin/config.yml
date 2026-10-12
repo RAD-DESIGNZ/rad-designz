@@ -33,7 +33,7 @@ collections:
     fields:
       - { name: "title", label: "Project title", widget: "string" }
       - { name: "year", label: "Year", widget: "number", value_type: "int", min: 2000, max: 2100, default: 2026 }
-      - { name: "client", label: "Client", widget: "string", default: "Personal" }
+      - { name: "client", label: "Site", widget: "string", required: false, hint: "A domain like domnulics.ro. Leave empty if the project has no site." }
       - name: "category"
         label: "Disciplines"
         widget: "select"
@@ -85,8 +85,9 @@ collections:
           - { name: "heading", label: "Page heading", widget: "string" }
           - { name: "lede", label: "Opening paragraph", widget: "text" }
           - { name: "email", label: "Email address", widget: "string" }
-          - { name: "instagram", label: "Instagram URL", widget: "string", required: false }
-          - { name: "behance", label: "Behance URL", widget: "string", required: false }
+          - { name: "behance", label: "Behance URL", widget: "string", required: false, hint: "Shown on the Contact page and as a footer icon." }
+          - { name: "facebook", label: "Facebook URL", widget: "string", required: false, hint: "Footer icon only." }
+          - { name: "instagram", label: "Instagram URL", widget: "string", required: false, hint: "Footer icon only." }
           - { name: "linktree", label: "Linktree URL", widget: "string", required: false }
           - { name: "panel_title", label: "Side box title", widget: "string", required: false }
           - { name: "panel_items", label: "Side box list", widget: "list", required: false }

@@ -9,7 +9,7 @@ const projects = defineCollection({
   schema: z.object({
     title: z.string(),
     year: z.number(),
-    client: z.string().default('Personal'),
+    client: z.string().default(''),
     // Accepts a single value (older entries) or a list (new entries).
     category: z.union([discipline, z.array(discipline).min(1)])
       .transform(v => (Array.isArray(v) ? v : [v])),
@@ -31,6 +31,7 @@ const pages = defineCollection({
     panel_title: z.string().default(''),
     panel_items: z.array(z.string()).default([]),
     email: z.string().default(''),
+    facebook: z.string().default(''),
     instagram: z.string().default(''),
     behance: z.string().default(''),
     linktree: z.string().default('')
