@@ -16,5 +16,5 @@ gallery:
   - /uploads/bdb33b158956807.6395991fc3ea2.webp
 tools: []
 link: www.pash.ro
-featured: false
+featured: true
 ---
