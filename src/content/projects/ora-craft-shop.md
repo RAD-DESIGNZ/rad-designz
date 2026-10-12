@@ -1,5 +1,5 @@
 ---
-order: 7
+order: 6
 title: ORA - Craft Shop
 year: 2024
 client: ORA - Craft Shop
