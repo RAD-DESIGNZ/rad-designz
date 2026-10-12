@@ -1,4 +1,5 @@
 ---
+order: 6
 title: Dvision - Cut To Create
 year: 2021
 client: Dvision Studio
@@ -14,5 +15,4 @@ gallery:
 tools: []
 link: www.dvision.studio
 featured: false
-order: 100
 ---

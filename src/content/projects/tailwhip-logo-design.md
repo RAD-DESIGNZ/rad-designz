@@ -1,4 +1,5 @@
 ---
+order: 4
 title: Tailwhip - Logo Design
 year: 2026
 client: Tailwhip
@@ -30,5 +31,4 @@ gallery:
 tools: []
 link: ''
 featured: true
-order: 100
 ---

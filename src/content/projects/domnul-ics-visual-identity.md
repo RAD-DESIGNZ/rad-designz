@@ -1,4 +1,5 @@
 ---
+order: 2
 title: Domnul ICS - Visual Identity
 year: 2026
 client: domnulics.ro
@@ -35,7 +36,6 @@ gallery:
 tools: []
 link: ''
 featured: true
-order: 100
 ---
 
 Ignat Costin Ștefan works across music, personal development training, ski and yoga sessions, and politics. Four fields with nothing visual in common, and a name that nobody shortens the same way twice. The brand needed one mark that could carry all of it without belonging to any single one.

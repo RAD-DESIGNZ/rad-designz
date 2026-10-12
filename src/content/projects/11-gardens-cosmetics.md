@@ -1,4 +1,5 @@
 ---
+order: 1
 title: 11 Gardens - Cosmetics
 year: 2025
 client: Personal
@@ -14,5 +15,4 @@ gallery:
 tools: []
 link: ''
 featured: true
-order: 100
 ---

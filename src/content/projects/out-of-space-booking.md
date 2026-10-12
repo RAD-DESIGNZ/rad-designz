@@ -1,4 +1,5 @@
 ---
+order: 3
 title: Out of Space Booking
 year: 2026
 client: Out of Space Music Booking
@@ -31,5 +32,4 @@ gallery:
 tools: []
 link: ''
 featured: true
-order: 100
 ---
