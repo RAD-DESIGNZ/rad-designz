@@ -18,5 +18,5 @@ gallery:
   - /uploads/d542eb158959689.6395ad09f1772.webp
 tools: []
 link: ''
-featured: false
+featured: true
 ---
