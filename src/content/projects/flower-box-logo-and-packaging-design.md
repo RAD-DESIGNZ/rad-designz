@@ -1,5 +1,5 @@
 ---
-order: 9
+order: 4
 title: Flower Box - Logo and Packaging Design
 year: 2025
 client: Flower Box

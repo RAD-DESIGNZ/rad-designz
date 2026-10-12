@@ -1,5 +1,5 @@
 ---
-order: 5
+order: 8
 title: Arta Stradala
 year: 2025
 client: Arta Stradala - Brasov

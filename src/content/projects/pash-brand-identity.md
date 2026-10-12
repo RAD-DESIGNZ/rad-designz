@@ -1,5 +1,5 @@
 ---
-order: 10
+order: 5
 title: PASH - Brand Identity
 year: 2024
 client: PASH - Piese Auto Second Hand
