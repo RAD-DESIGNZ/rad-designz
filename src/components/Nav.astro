@@ -9,14 +9,13 @@ const links = [
 <header class="nav">
   <div class="nav-in">
     <a class="brand" href="/" aria-label="RAD DESIGNZ — home">
-      <img src="/logo/wordmark-252.png" alt="RAD DESIGNZ" width="339" height="252" />
+      <img class="brand-mark" src="/logo/eye-96.png" alt="" width="96" height="96" />
+      <img class="brand-word" src="/logo/wordmark-252.png" alt="RAD DESIGNZ" width="339" height="252" />
     </a>
     <nav aria-label="Main">
       <ul class="nav-links">
         {links.map(l => (
-          <li>
-            <a href={l.href} aria-current={path === l.href ? 'page' : undefined}>{l.label}</a>
-          </li>
+          <li><a href={l.href} aria-current={path === l.href ? 'page' : undefined}>{l.label}</a></li>
         ))}
       </ul>
     </nav>
