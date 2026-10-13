@@ -81,16 +81,21 @@ img { max-width: 100%; display: block; height: auto; }
 .nav { border-bottom: 3px solid var(--violet); background: var(--ink); position: sticky; top: 0; z-index: 50; }
 .nav-in { max-width: var(--max); margin-inline: auto; padding: .7rem var(--gutter);
   display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
-.brand { display: flex; align-items: center; gap: .85rem; line-height: 0; text-decoration: none; }
+.brand { display: block; line-height: 0; text-decoration: none; flex: 1 1 0; }
 .brand img { transition: transform .12s ease; }
-.brand-mark { height: 46px; width: 46px; }
 .brand-word { height: 64px; width: auto; }
 .brand:hover img { transform: translate(1px, 1px); }
-@media (max-width: 560px) {
-  .brand { gap: .55rem; }
-  .brand-mark { height: 34px; width: 34px; }
-  .brand-word { height: 48px; }
+
+/* eye mark, centred in the bar */
+.nav-mark { height: 46px; width: 46px; flex: 0 0 auto; }
+.nav-in > nav { flex: 1 1 0; display: flex; justify-content: flex-end; }
+
+@media (max-width: 760px) {
+  .nav-in { justify-content: space-between; }
+  .brand, .nav-in > nav { flex: 0 0 auto; }
+  .nav-mark { display: none; }
 }
+@media (max-width: 560px) { .brand-word { height: 48px; } }
 .nav-links { display: flex; gap: 1.5rem; list-style: none; margin: 0; padding: 0; }
 .nav-links a { font-family: var(--display); font-size: .8rem; text-transform: uppercase;
   color: #F2F2F5; text-decoration: none; letter-spacing: .06em; }
@@ -122,6 +127,7 @@ img { max-width: 100%; display: block; height: auto; }
 /* ---------- sections ---------- */
 .sec { padding: clamp(2.25rem, 5vw, 3.5rem) 0; position: relative; }
 .sec-tight { padding-top: clamp(.75rem, 2vw, 1.25rem); }
+.sec-showcase { padding-bottom: clamp(.5rem, 1.5vw, 1rem); }
 .sec-head { position: relative; z-index: 1; display: flex; align-items: baseline; justify-content: space-between; gap: 1.5rem;
   flex-wrap: wrap; border-bottom: 3px solid var(--violet); padding-bottom: .7rem; margin-bottom: 1.6rem; }
 
@@ -157,7 +163,7 @@ img { max-width: 100%; display: block; height: auto; }
 }
 .showcase-frame img.is-on { opacity: 1; }
 .showcase:hover .showcase-frame { transform: translate(3px, 3px); box-shadow: 6px 6px 0 var(--pink); }
-.showcase-text { margin-top: .9rem; max-width: 860px; margin-inline: auto; text-align: center; }
+.showcase-text { margin-top: .8rem; max-width: 860px; margin-inline: auto; text-align: center; }
 .showcase-text h2 { font-size: clamp(1.3rem, 2.6vw, 1.85rem); }
 .showcase:hover .showcase-text h2 { color: var(--purple); }
 .showcase-text .lede { margin: .6rem auto 0; font-size: 1rem; max-width: 60ch; }

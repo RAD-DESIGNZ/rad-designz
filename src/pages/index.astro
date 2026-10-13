@@ -37,7 +37,7 @@ const slides = shown.map(p => ({
   </section>
 
   {slides.length > 1 && (
-    <section class="sec sec-tight">
+    <section class="sec sec-tight sec-showcase">
       <div class="wrap">
         <a class="showcase" id="showcase" href={slides[0].href} aria-label="Featured project">
           <div class="showcase-frame" id="showcase-frame">
@@ -48,8 +48,6 @@ const slides = shown.map(p => ({
           </div>
           <div class="showcase-text">
             <h2 id="showcase-title">{slides[0].title}</h2>
-            <p class="lede" id="showcase-summary">{slides[0].summary}</p>
-            <p class="card-meta" id="showcase-meta">{slides[0].meta}</p>
           </div>
         </a>
         <script type="application/json" id="showcase-data" set:html={JSON.stringify(slides)} />
@@ -92,8 +90,6 @@ const slides = shown.map(p => ({
     const slides: Slide[] = JSON.parse(dataEl.textContent || '[]');
     const imgs = Array.from(frame.querySelectorAll<HTMLImageElement>('img'));
     const elTitle = document.getElementById('showcase-title')!;
-    const elSummary = document.getElementById('showcase-summary')!;
-    const elMeta = document.getElementById('showcase-meta')!;
 
     /** Average the pixels around an image's border, so the letterbox matches it. */
     const edgeColour = (img: HTMLImageElement): string => {
@@ -139,8 +135,6 @@ const slides = shown.map(p => ({
       imgs[i].classList.add('is-on');
       const s = slides[i];
       elTitle.textContent = s.title;
-      elSummary.textContent = s.summary;
-      elMeta.textContent = s.meta;
       root.href = s.href;
       paint(imgs[i]);
     };
