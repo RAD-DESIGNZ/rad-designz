@@ -146,10 +146,10 @@ const slides = shown.map(p => ({
     };
 
     if (slides.length > 1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      let timer = window.setInterval(() => show((i + 1) % slides.length), 4500);
+      let timer = window.setInterval(() => show((i + 1) % slides.length), 3000);
       root.addEventListener('mouseenter', () => clearInterval(timer));
       root.addEventListener('mouseleave', () => {
-        timer = window.setInterval(() => show((i + 1) % slides.length), 4500);
+        timer = window.setInterval(() => show((i + 1) % slides.length), 3000);
       });
     }
   }

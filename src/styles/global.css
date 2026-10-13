@@ -137,7 +137,8 @@ img { max-width: 100%; display: block; height: auto; }
 /* ---------- rotating showcase ---------- */
 .showcase { display: block; text-decoration: none; color: inherit; }
 .showcase-frame {
-  position: relative; aspect-ratio: 16 / 7;
+  position: relative; aspect-ratio: 16 / 6;
+  max-height: min(42vh, 380px);
   border: 3px solid var(--ink); box-shadow: 9px 9px 0 var(--violet);
   background-color: var(--elevated); overflow: hidden;
   transition: background-color .45s ease, transform .15s ease, box-shadow .15s ease;
@@ -149,11 +150,11 @@ img { max-width: 100%; display: block; height: auto; }
 }
 .showcase-frame img.is-on { opacity: 1; }
 .showcase:hover .showcase-frame { transform: translate(3px, 3px); box-shadow: 6px 6px 0 var(--pink); }
-.showcase-text { margin-top: 1.1rem; }
-.showcase-text h2 { font-size: clamp(1.4rem, 3vw, 2.1rem); }
+.showcase-text { margin-top: .9rem; }
+.showcase-text h2 { font-size: clamp(1.3rem, 2.6vw, 1.85rem); }
 .showcase:hover .showcase-text h2 { color: var(--purple); }
 .showcase-text .lede { margin: .6rem 0 0; font-size: 1rem; }
-@media (max-width: 640px) { .showcase-frame { aspect-ratio: 4 / 3; } }
+@media (max-width: 640px) { .showcase-frame { aspect-ratio: 4 / 3; max-height: 52vh; } }
 
 /* ---------- filter dropdown ---------- */
 .filter-bar { position: relative; z-index: 40; display: flex; align-items: center;
