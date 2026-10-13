@@ -2,13 +2,23 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import { labelFor, sortCategories } from '../lib/categories';
 
 const all = await getCollection('projects');
-const featured = all
-  .filter(p => p.data.featured)
-  .sort((a, b) => a.data.order - b.data.order)
-  .slice(0, 4);
-const shown = featured.length ? featured : all.sort((a, b) => a.data.order - b.data.order).slice(0, 4);
+const sorted = all.sort((a, b) => a.data.order - b.data.order);
+
+// Every project marked "Show on homepage" — no limit.
+const featured = sorted.filter(p => p.data.featured);
+const shown = featured.length ? featured : sorted;
+
+// The showcase rotates through the same set.
+const slides = shown.map(p => ({
+  href: `/projects/${p.id}`,
+  title: p.data.title,
+  cover: p.data.cover,
+  summary: p.data.summary,
+  meta: `${sortCategories(p.data.category).map(labelFor).join(' · ')} — ${p.data.year}`
+}));
 ---
 <Base title="RAD DESIGNZ — Brand identity, logo, packaging, creative direction">
   <section class="hero">
@@ -26,6 +36,27 @@ const shown = featured.length ? featured : all.sort((a, b) => a.data.order - b.d
     </div>
   </section>
 
+  {slides.length > 1 && (
+    <section class="sec sec-tight">
+      <div class="wrap">
+        <a class="showcase" id="showcase" href={slides[0].href} aria-label="Featured project">
+          <div class="showcase-frame" id="showcase-frame">
+            {slides.map((s, i) => (
+              <img class={i === 0 ? 'is-on' : ''} src={s.cover} alt="" data-i={i}
+                   loading={i === 0 ? 'eager' : 'lazy'} />
+            ))}
+          </div>
+          <div class="showcase-text">
+            <h2 id="showcase-title">{slides[0].title}</h2>
+            <p class="lede" id="showcase-summary">{slides[0].summary}</p>
+            <p class="card-meta" id="showcase-meta">{slides[0].meta}</p>
+          </div>
+        </a>
+        <script type="application/json" id="showcase-data" set:html={JSON.stringify(slides)} />
+      </div>
+    </section>
+  )}
+
   <section class="sec sec-tight">
     <div class="wrap">
       <div class="sec-head sec-head-bare">
@@ -42,6 +73,7 @@ const shown = featured.length ? featured : all.sort((a, b) => a.data.order - b.d
               cover={p.data.cover}
               year={p.data.year}
               categories={p.data.category}
+              summary={p.data.summary}
             />
           ))}
         </div>
@@ -49,3 +81,76 @@ const shown = featured.length ? featured : all.sort((a, b) => a.data.order - b.d
     </div>
   </section>
 </Base>
+
+<script>
+  const root = document.getElementById('showcase') as HTMLAnchorElement | null;
+  const frame = document.getElementById('showcase-frame');
+  const dataEl = document.getElementById('showcase-data');
+
+  if (root && frame && dataEl) {
+    type Slide = { href: string; title: string; cover: string; summary: string; meta: string };
+    const slides: Slide[] = JSON.parse(dataEl.textContent || '[]');
+    const imgs = Array.from(frame.querySelectorAll<HTMLImageElement>('img'));
+    const elTitle = document.getElementById('showcase-title')!;
+    const elSummary = document.getElementById('showcase-summary')!;
+    const elMeta = document.getElementById('showcase-meta')!;
+
+    /** Average the pixels around an image's border, so the letterbox matches it. */
+    const edgeColour = (img: HTMLImageElement): string => {
+      try {
+        const n = 24;
+        const c = document.createElement('canvas');
+        c.width = n; c.height = n;
+        const ctx = c.getContext('2d', { willReadFrequently: true });
+        if (!ctx) return '';
+        ctx.drawImage(img, 0, 0, n, n);
+        const d = ctx.getImageData(0, 0, n, n).data;
+        let r = 0, g = 0, b = 0, count = 0;
+        for (let y = 0; y < n; y++) {
+          for (let x = 0; x < n; x++) {
+            const onEdge = x < 2 || y < 2 || x > n - 3 || y > n - 3;
+            if (!onEdge) continue;
+            const i = (y * n + x) * 4;
+            if (d[i + 3] < 200) continue;
+            r += d[i]; g += d[i + 1]; b += d[i + 2]; count++;
+          }
+        }
+        if (!count) return '';
+        return `rgb(${Math.round(r / count)}, ${Math.round(g / count)}, ${Math.round(b / count)})`;
+      } catch {
+        return '';
+      }
+    };
+
+    const paint = (img: HTMLImageElement) => {
+      const apply = () => {
+        const c = edgeColour(img);
+        if (c) frame.style.backgroundColor = c;
+      };
+      img.complete ? apply() : img.addEventListener('load', apply, { once: true });
+    };
+
+    let i = 0;
+    paint(imgs[0]);
+
+    const show = (next: number) => {
+      imgs[i].classList.remove('is-on');
+      i = next;
+      imgs[i].classList.add('is-on');
+      const s = slides[i];
+      elTitle.textContent = s.title;
+      elSummary.textContent = s.summary;
+      elMeta.textContent = s.meta;
+      root.href = s.href;
+      paint(imgs[i]);
+    };
+
+    if (slides.length > 1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      let timer = window.setInterval(() => show((i + 1) % slides.length), 4500);
+      root.addEventListener('mouseenter', () => clearInterval(timer));
+      root.addEventListener('mouseleave', () => {
+        timer = window.setInterval(() => show((i + 1) % slides.length), 4500);
+      });
+    }
+  }
+</script>
