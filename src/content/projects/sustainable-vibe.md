@@ -17,5 +17,5 @@ gallery:
   - /uploads/e752e3159794467.63a5b6476426a.webp
 tools: []
 link: ''
-featured: true
+featured: false
 ---
