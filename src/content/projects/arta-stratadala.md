@@ -3,7 +3,8 @@ order: 8
 title: Arta Stradala
 year: 2025
 client: Arta Stradala - Brasov
-category: branding
+category:
+  - branding
 summary: |-
   We developed a bold visual identity for Arta Stradala, a creative project rooted in street culture, urban expression and the energy of public spaces.
 
@@ -15,5 +16,5 @@ gallery:
   - /uploads/Artboard 1-100.jpg
 tools: []
 link: ''
-featured: true
+featured: false
 ---
