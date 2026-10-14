@@ -30,5 +30,5 @@ gallery:
   - /uploads/tailwihip-final-pattern.webp
 tools: []
 link: ''
-featured: true
+featured: false
 ---
