@@ -1,5 +1,5 @@
 ---
-order: 7
+order: 9
 title: Tailwhip - Bicycle Shop
 year: 2026
 client: Tailwhip

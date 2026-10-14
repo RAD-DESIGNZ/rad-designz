@@ -1,5 +1,5 @@
 ---
-order: 14
+order: 2
 title: F64 - Digital Marketing
 year: 2026
 client: www.f64.ro

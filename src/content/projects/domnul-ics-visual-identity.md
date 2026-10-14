@@ -1,5 +1,5 @@
 ---
-order: 2
+order: 3
 title: Domnul ICS
 year: 2026
 client: www.domnulics.ro
