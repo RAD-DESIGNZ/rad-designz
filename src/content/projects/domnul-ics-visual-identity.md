@@ -1,6 +1,6 @@
 ---
 order: 2
-title: Domnul ICS - Visual Identity
+title: Domnul ICS
 year: 2026
 client: domnulics.ro
 category:
