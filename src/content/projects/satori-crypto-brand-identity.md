@@ -1,6 +1,6 @@
 ---
 order: 11
-title: Satori Crypto - Brand Identity
+title: Satori -  Crypto Market
 year: 2024
 client: ''
 category:
