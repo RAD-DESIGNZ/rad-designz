@@ -1,8 +1,8 @@
 ---
 order: 5
-title: PASH - Brand Identity
+title: PASH - Piese Auto Second Hand
 year: 2024
-client: PASH - Piese Auto Second Hand
+client: www.pash.ro
 category:
   - branding
   - logo
