@@ -1,6 +1,6 @@
 ---
 order: 7
-title: Tailwhip - Logo Design
+title: Tailwhip - Bicycle Shop
 year: 2026
 client: Tailwhip
 category:
