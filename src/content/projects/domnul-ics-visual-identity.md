@@ -2,7 +2,7 @@
 order: 2
 title: Domnul ICS
 year: 2026
-client: domnulics.ro
+client: www.domnulics.ro
 category:
   - branding
   - creative-direction
