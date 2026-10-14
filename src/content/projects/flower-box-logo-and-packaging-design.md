@@ -1,6 +1,6 @@
 ---
 order: 4
-title: Flower Box - Logo and Packaging Design
+title: Flower Box - Gift Shop
 year: 2025
 client: Flower Box
 category:
