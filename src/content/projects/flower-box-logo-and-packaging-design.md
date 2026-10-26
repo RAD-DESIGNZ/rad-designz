@@ -1,5 +1,5 @@
 ---
-order: 7
+order: 6
 title: Flower Box - Gift Shop
 year: 2025
 client: Flower Box
