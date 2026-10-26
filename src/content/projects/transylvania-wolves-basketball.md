@@ -15,7 +15,7 @@ summary: |-
   Transylvania Wolves — Brand Identity & Creative Direction
 
   Creative direction for a youth basketball programme with two
-  teams, Turda Wolves and Napoca Wolves. Three logos, game kits for
+  teams, Turda Wolves and Napoca Wolves. Equipment Designs, the three logos, game kits for
   both cities, t-shirts, stickers, magnets and sponsor drink labels
   — plus the social side: campaigns, banners, posts and stories.
 cover: /uploads/artboard-38.webp
