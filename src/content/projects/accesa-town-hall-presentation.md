@@ -1,5 +1,5 @@
 ---
-order: 5
+order: 7
 title: Accesa - Town Hall Presentation
 year: 2024
 client: www.accesa.eu
@@ -23,5 +23,5 @@ gallery:
   - /uploads/83830c176835765.64cb9c2f6216e.webp
 tools: []
 link: ''
-featured: false
+featured: true
 ---
