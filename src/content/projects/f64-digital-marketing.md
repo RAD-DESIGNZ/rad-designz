@@ -7,7 +7,7 @@ category:
   - social-media
   - print
 summary: F64 - Digital Marketing, Newsletter, Ad Banners, Christmas Banners and Flyers
-cover: /uploads/a44382176834103.64cb9758067d8.webp
+cover: /uploads/f64-401de5176834103.64cb975804b54.webp
 gallery:
   - /uploads/16a1aa176834103.64cb975809de2.webp
   - /uploads/183032176834103.64cb975805a59.webp
@@ -19,5 +19,5 @@ gallery:
   - /uploads/a44382176834103.64cb9758067d8.webp
 tools: []
 link: ''
-featured: true
+featured: false
 ---
