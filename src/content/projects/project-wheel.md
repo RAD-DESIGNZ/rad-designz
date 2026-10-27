@@ -9,6 +9,7 @@ category:
 summary: ProjectWheel - Landing Page Website Design
 cover: /uploads/projectwheel1.webp
 gallery:
+  - /uploads/projectwheel1.webp
   - /uploads/projectwheel.webp
   - /uploads/projectwheel2.webp
 tools: []
