@@ -6,7 +6,7 @@ client: ''
 category:
   - ui-ux
 summary: Formula 1 Landing Page Design for Mobile Appp
-cover: /uploads/f11.webp
+cover: /uploads/f111.webp
 gallery:
   - /uploads/f1.webp
   - /uploads/f1.webp
