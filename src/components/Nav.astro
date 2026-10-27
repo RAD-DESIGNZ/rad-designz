@@ -11,7 +11,13 @@ const links = [
     <a class="brand" href="/" aria-label="RAD DESIGNZ — home">
       <img class="brand-word" src="/logo/wordmark-252.png" alt="RAD DESIGNZ" width="339" height="252" />
     </a>
-    <img class="nav-mark" src="/logo/eye-96.png" alt="" width="96" height="96" aria-hidden="true" />
+    <div class="nav-mark nav-eye" aria-hidden="true">
+      <img src="/logo/eye-rays.png" alt="" width="144" height="144" />
+      <div class="eye-ball">
+        <img src="/logo/eye-almond.png" alt="" width="144" height="144" />
+        <img class="eye-iris" src="/logo/eye-iris.png" alt="" width="144" height="144" />
+      </div>
+    </div>
     <nav aria-label="Main">
       <ul class="nav-links">
         {links.map(l => (
@@ -21,3 +27,56 @@ const links = [
     </nav>
   </div>
 </header>
+
+<script>
+  // Eye mark: the iris follows the pointer, and the eye blinks every few seconds.
+  const eye = document.querySelector<HTMLElement>('.nav-eye');
+  const iris = eye?.querySelector<HTMLElement>('.eye-iris');
+  const ball = eye?.querySelector<HTMLElement>('.eye-ball');
+
+  if (eye && iris && ball && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const MAX_X = 7;    // % of the mark's width
+    const MAX_Y = 3.5;  // % of the mark's height
+    let px: number | null = null;
+    let py: number | null = null;
+    let x = 0, y = 0, raf = 0;
+
+    const step = () => {
+      let tx = 0, ty = 0;
+      if (px !== null && py !== null) {
+        const r = eye.getBoundingClientRect();
+        const dx = px - (r.left + r.width / 2);
+        const dy = py - (r.top + r.height * 0.596);
+        const d = Math.hypot(dx, dy) || 1;
+        const k = Math.min(d / 260, 1);
+        tx = (dx / d) * k * MAX_X;
+        ty = (dy / d) * k * MAX_Y;
+      }
+      x += (tx - x) * 0.18;
+      y += (ty - y) * 0.18;
+      iris.style.transform = `translate(${x.toFixed(2)}%, ${y.toFixed(2)}%)`;
+      raf = Math.abs(tx - x) > 0.01 || Math.abs(ty - y) > 0.01 ? requestAnimationFrame(step) : 0;
+    };
+    const go = () => { if (!raf) raf = requestAnimationFrame(step); };
+
+    window.addEventListener('pointermove', (e) => { px = e.clientX; py = e.clientY; go(); }, { passive: true });
+    document.addEventListener('pointerleave', () => { px = py = null; go(); });
+    window.addEventListener('scroll', go, { passive: true });
+
+    const blink = () => {
+      ball.classList.remove('is-blinking');
+      void ball.offsetWidth;
+      ball.classList.add('is-blinking');
+    };
+    ball.addEventListener('animationend', () => ball.classList.remove('is-blinking'));
+
+    const loop = () => {
+      window.setTimeout(() => {
+        blink();
+        if (Math.random() < 0.2) window.setTimeout(blink, 260);
+        loop();
+      }, 4000 + Math.random() * 5000);
+    };
+    loop();
+  }
+</script>
