@@ -23,6 +23,7 @@ const asUrl = (v: string): string | null => {
 const siteUrl = asUrl(d.client);
 const siteLabel = d.client.trim().replace(/^https?:\/\//i, '').replace(/\/$/, '');
 
+const STICKERS = ['tv', 'floppy', 'console'];
 ---
 <Base title={`${d.title} — RAD DESIGNZ`} description={d.summary}>
   <article>
@@ -57,10 +58,12 @@ const siteLabel = d.client.trim().replace(/^https?:\/\//i, '').replace(/\/$/, ''
 
     <div class="proj-body">
       <div class="wrap">
+        <img class="deco deco-side deco-side-l" src={`/illustrations/${STICKERS[d.order % 3]}.webp`} alt="" aria-hidden="true" loading="lazy" decoding="async" />
+        <img class="deco deco-side deco-side-r" src={`/illustrations/${STICKERS[(d.order + 1) % 3]}.webp`} alt="" aria-hidden="true" loading="lazy" decoding="async" />
         <Content />
 
         {d.gallery.length > 0 && (
-          <div class="gallery">
+          <div class="gallery" data-sticker={(d.order + 2) % 3}>
             {d.gallery.map((src, i) => (
               <img src={src} alt={`${d.title}, image ${i + 1}`} loading="lazy" />
             ))}
@@ -70,3 +73,34 @@ const siteLabel = d.client.trim().replace(/^https?:\/\//i, '').replace(/\/$/, ''
     </div>
   </article>
 </Base>
+
+<script>
+  // Gallery: two even columns; wide banners get their own centred row.
+  // A tall image left alone in its row gets a sticker illustration beside it.
+  const gallery = document.querySelector<HTMLElement>('.gallery');
+  if (gallery) {
+    const STICKERS = ['tv', 'floppy', 'console'];
+    const imgs = Array.from(gallery.querySelectorAll<HTMLImageElement>('img'));
+    const isWide = (img?: HTMLImageElement) => !!img && img.naturalWidth / Math.max(img.naturalHeight, 1) > 1.5;
+    const ready = (img: HTMLImageElement) =>
+      img.complete && img.naturalWidth ? Promise.resolve() :
+      new Promise<void>(res => { img.addEventListener('load', () => res(), { once: true }); img.addEventListener('error', () => res(), { once: true }); });
+
+    Promise.all(imgs.map(ready)).then(() => {
+      let col = 0, sticker = Number(gallery.dataset.sticker || 0);
+      imgs.forEach((img, n) => {
+        if (isWide(img)) { img.classList.add('is-wide'); col = 0; return; }
+        col++;
+        const next = imgs[n + 1];
+        if (col % 2 === 1 && (!next || isWide(next))) {
+          const s = document.createElement('img');
+          s.src = `/illustrations/${STICKERS[sticker++ % STICKERS.length]}.webp`;
+          s.alt = ''; s.setAttribute('aria-hidden', 'true');
+          s.className = 'gallery-sticker';
+          img.after(s);
+          col++;
+        }
+      });
+    });
+  }
+</script>

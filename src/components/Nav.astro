@@ -11,13 +11,15 @@ const links = [
     <a class="brand" href="/" aria-label="RAD DESIGNZ — home">
       <img class="brand-word" src="/logo/wordmark-252.png" alt="RAD DESIGNZ" width="339" height="252" />
     </a>
-    <div class="nav-mark nav-eye" aria-hidden="true">
-      <img src="/logo/eye-rays.png" alt="" width="144" height="144" />
-      <div class="eye-ball">
-        <img src="/logo/eye-almond.png" alt="" width="144" height="144" />
-        <img class="eye-iris" src="/logo/eye-iris.png" alt="" width="144" height="144" />
-      </div>
-    </div>
+    <a class="nav-mark nav-eye" href="/" aria-label="RAD DESIGNZ — back to the top of the homepage">
+      <span class="eye-inner">
+        <img src="/logo/eye-rays.png" alt="" width="144" height="144" />
+        <span class="eye-ball">
+          <img src="/logo/eye-almond.png" alt="" width="144" height="144" />
+          <img class="eye-iris" src="/logo/eye-iris.png" alt="" width="144" height="144" />
+        </span>
+      </span>
+    </a>
     <nav aria-label="Main">
       <ul class="nav-links">
         {links.map(l => (
@@ -33,9 +35,28 @@ const links = [
   // Mouse: the iris follows the pointer.
   // Touch screens: it looks where you tap or drag, glances up or down while
   // you scroll, and looks around on its own when nothing is happening.
-  const eye = document.querySelector<HTMLElement>('.nav-eye');
+  const eyeLink = document.querySelector<HTMLAnchorElement>('.nav-eye');
+  const eye = eyeLink?.querySelector<HTMLElement>('.eye-inner');
   const iris = eye?.querySelector<HTMLElement>('.eye-iris');
   const ball = eye?.querySelector<HTMLElement>('.eye-ball');
+
+  // Tapping the eye goes to the top of the homepage (smooth scroll if already there).
+  eyeLink?.addEventListener('click', (e) => {
+    if (location.pathname === '/') {
+      e.preventDefault();
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    }
+  });
+
+  // On phones the bar scrolls away; the eye stays pinned top-right, no background.
+  if (eyeLink) {
+    const phone = window.matchMedia('(max-width: 760px)');
+    const pin = () => eyeLink.classList.toggle('is-floating', phone.matches && window.scrollY > 2);
+    window.addEventListener('scroll', pin, { passive: true });
+    phone.addEventListener('change', pin);
+    pin();
+  }
 
   if (eye && iris && ball && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const MAX_X = 7;    // % of the mark's width
