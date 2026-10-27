@@ -8,7 +8,7 @@ category:
   - editorial
   - visual
 summary: Accesa - Town Hall Presentations for social media.
-cover: /uploads/150ebb176835329.64cb9af92806f.webp
+cover: /uploads/5c3f96176835329.64cb9af92604b.webp
 gallery:
   - /uploads/150ebb176835329.64cb9af92806f.webp
   - /uploads/2b60b2176835765.64cb9c2f67905.webp
@@ -23,5 +23,5 @@ gallery:
   - /uploads/83830c176835765.64cb9c2f6216e.webp
 tools: []
 link: ''
-featured: true
+featured: false
 ---
