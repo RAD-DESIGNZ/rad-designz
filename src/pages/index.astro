@@ -39,6 +39,7 @@ const slides = shown.map(p => ({
   {slides.length > 1 && (
     <section class="sec sec-tight sec-showcase">
       <div class="wrap">
+        <div class="showcase-stage">
         <a class="showcase" id="showcase" href={slides[0].href} aria-label="Featured project">
           <div class="showcase-frame" id="showcase-frame">
             {slides.map((s, i) => (
@@ -50,6 +51,11 @@ const slides = shown.map(p => ({
             <h2 id="showcase-title">{slides[0].title}</h2>
           </div>
         </a>
+        <div class="showcase-nav">
+          <button type="button" class="showcase-arrow showcase-prev" id="showcase-prev" aria-label="Previous project"><svg viewBox="0 0 16 26" aria-hidden="true"><polygon points="1.5,1.5 7.5,1.5 15,13 7.5,24.5 1.5,24.5 9.5,13" /></svg></button>
+          <button type="button" class="showcase-arrow showcase-next" id="showcase-next" aria-label="Next project"><svg viewBox="0 0 16 26" aria-hidden="true"><polygon points="1.5,1.5 7.5,1.5 15,13 7.5,24.5 1.5,24.5 9.5,13" /></svg></button>
+        </div>
+        </div>
         <script type="application/json" id="showcase-data" set:html={JSON.stringify(slides)} />
       </div>
     </section>
@@ -139,12 +145,20 @@ const slides = shown.map(p => ({
       paint(imgs[i]);
     };
 
-    if (slides.length > 1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      let timer = window.setInterval(() => show((i + 1) % slides.length), 2000);
-      root.addEventListener('mouseenter', () => clearInterval(timer));
-      root.addEventListener('mouseleave', () => {
-        timer = window.setInterval(() => show((i + 1) % slides.length), 2000);
-      });
-    }
+    const next = () => show((i + 1) % slides.length);
+    const prev = () => show((i - 1 + slides.length) % slides.length);
+
+    // Rotates every 2 seconds and keeps going on hover.
+    // The arrows step through by hand; each click restarts the 2 seconds.
+    const auto = slides.length > 1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let timer = 0;
+    const restart = () => {
+      if (!auto) return;
+      window.clearInterval(timer);
+      timer = window.setInterval(next, 2000);
+    };
+    document.getElementById('showcase-prev')?.addEventListener('click', () => { prev(); restart(); });
+    document.getElementById('showcase-next')?.addEventListener('click', () => { next(); restart(); });
+    restart();
   }
 </script>

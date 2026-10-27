@@ -29,7 +29,10 @@ const links = [
 </header>
 
 <script>
-  // Eye mark: the iris follows the pointer, and the eye blinks every few seconds.
+  // Eye mark: blinks every few seconds everywhere.
+  // Mouse: the iris follows the pointer.
+  // Touch screens: it looks where you tap or drag, glances up or down while
+  // you scroll, and looks around on its own when nothing is happening.
   const eye = document.querySelector<HTMLElement>('.nav-eye');
   const iris = eye?.querySelector<HTMLElement>('.eye-iris');
   const ball = eye?.querySelector<HTMLElement>('.eye-ball');
@@ -37,31 +40,66 @@ const links = [
   if (eye && iris && ball && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const MAX_X = 7;    // % of the mark's width
     const MAX_Y = 3.5;  // % of the mark's height
-    let px: number | null = null;
-    let py: number | null = null;
-    let x = 0, y = 0, raf = 0;
+    let mouse = false;                 // true once a real mouse has moved
+    let mx: number | null = null, my: number | null = null;
+    let tx = 0, ty = 0, x = 0, y = 0, raf = 0;
+    let holdUntil = 0, wanderAt = 0, lastScroll = window.scrollY;
 
-    const step = () => {
-      let tx = 0, ty = 0;
-      if (px !== null && py !== null) {
-        const r = eye.getBoundingClientRect();
-        const dx = px - (r.left + r.width / 2);
-        const dy = py - (r.top + r.height * 0.596);
-        const d = Math.hypot(dx, dy) || 1;
-        const k = Math.min(d / 260, 1);
-        tx = (dx / d) * k * MAX_X;
-        ty = (dy / d) * k * MAX_Y;
+    // Direction from the eye to a point on screen, as an iris offset.
+    const lookAt = (px: number, py: number) => {
+      const r = eye.getBoundingClientRect();
+      const dx = px - (r.left + r.width / 2);
+      const dy = py - (r.top + r.height * 0.596);
+      const d = Math.hypot(dx, dy) || 1;
+      const k = Math.min(d / 260, 1);
+      return [(dx / d) * k * MAX_X, (dy / d) * k * MAX_Y];
+    };
+
+    const step = (now: number) => {
+      if (mouse) {
+        if (mx !== null && my !== null) [tx, ty] = lookAt(mx, my);
+        else tx = ty = 0;
+      } else if (now > holdUntil && now > wanderAt) {
+        // Nothing happening: glance somewhere, sometimes back to centre.
+        if (Math.random() < 0.3) { tx = 0; ty = 0; }
+        else { tx = (Math.random() * 2 - 1) * MAX_X * 0.8; ty = (Math.random() * 2 - 1) * MAX_Y * 0.6; }
+        wanderAt = now + 1200 + Math.random() * 2300;
       }
       x += (tx - x) * 0.18;
       y += (ty - y) * 0.18;
       iris.style.transform = `translate(${x.toFixed(2)}%, ${y.toFixed(2)}%)`;
-      raf = Math.abs(tx - x) > 0.01 || Math.abs(ty - y) > 0.01 ? requestAnimationFrame(step) : 0;
+      // Keep running while moving, and on touch screens so the idle glances happen.
+      const moving = Math.abs(tx - x) > 0.01 || Math.abs(ty - y) > 0.01;
+      raf = moving || !mouse ? requestAnimationFrame(step) : 0;
     };
     const go = () => { if (!raf) raf = requestAnimationFrame(step); };
 
-    window.addEventListener('pointermove', (e) => { px = e.clientX; py = e.clientY; go(); }, { passive: true });
-    document.addEventListener('pointerleave', () => { px = py = null; go(); });
-    window.addEventListener('scroll', go, { passive: true });
+    const onPointer = (e: PointerEvent) => {
+      if (e.pointerType === 'mouse') {
+        mouse = true; mx = e.clientX; my = e.clientY;
+      } else {
+        mouse = false;
+        [tx, ty] = lookAt(e.clientX, e.clientY);
+        holdUntil = performance.now() + 1500;
+        wanderAt = holdUntil;
+      }
+      go();
+    };
+    window.addEventListener('pointermove', onPointer, { passive: true });
+    window.addEventListener('pointerdown', onPointer, { passive: true });
+    document.addEventListener('pointerleave', () => { mx = my = null; go(); });
+
+    window.addEventListener('scroll', () => {
+      const dy = window.scrollY - lastScroll;
+      lastScroll = window.scrollY;
+      if (!mouse && dy !== 0) {
+        tx *= 0.5;
+        ty = Math.sign(dy) * MAX_Y * Math.min(Math.abs(dy) / 30, 1);
+        holdUntil = performance.now() + 450;
+        wanderAt = holdUntil + 600;
+      }
+      go();
+    }, { passive: true });
 
     const blink = () => {
       ball.classList.remove('is-blinking');
@@ -78,5 +116,6 @@ const links = [
       }, 4000 + Math.random() * 5000);
     };
     loop();
+    go();
   }
 </script>

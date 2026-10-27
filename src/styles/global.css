@@ -9,6 +9,7 @@
   --lavender:   #D8B4FE;
   --pink:       #EC4899;
   --pink-soft:  #F9A8D4;
+  --lash:       #FD37A4;   /* pink of the eye-mark lashes, showcase arrows on hover */
 
   --line:       #2E2E3A;
   --shadow-off: 7px 7px 0;
@@ -102,7 +103,7 @@ img { max-width: 100%; display: block; height: auto; }
 @media (max-width: 760px) {
   .nav-in { justify-content: space-between; }
   .brand, .nav-in > nav { flex: 0 0 auto; }
-  .nav-mark { display: none; }
+  .nav-mark { height: 40px; width: 40px; }
 }
 @media (max-width: 560px) { .brand-word { height: 48px; } }
 .nav-links { display: flex; gap: 1.5rem; list-style: none; margin: 0; padding: 0; }
@@ -171,12 +172,43 @@ img { max-width: 100%; display: block; height: auto; }
   opacity: 0; transition: opacity .333s ease;
 }
 .showcase-frame img.is-on { opacity: 1; }
-.showcase:hover .showcase-frame { transform: translate(3px, 3px); box-shadow: 6px 6px 0 var(--pink); }
+.showcase-stage { position: relative; }
+.showcase-stage:hover .showcase-frame { transform: translate(3px, 3px); box-shadow: 6px 6px 0 var(--pink); }
+
+/* prev / next arrows, drawn like the lashes of the eye mark */
+.showcase-nav {
+  position: absolute; top: 0; left: 0; right: 0; margin-inline: auto;
+  max-width: 720px; aspect-ratio: 12 / 5; max-height: min(42vh, 380px);
+  pointer-events: none; transition: transform .15s ease;
+}
+.showcase-stage:hover .showcase-nav { transform: translate(3px, 3px); }
+.showcase-arrow {
+  pointer-events: auto; position: absolute; top: 50%; transform: translateY(-50%);
+  width: 44px; height: 44px; padding: 0; border: 0; background: none;
+  display: grid; place-items: center; cursor: pointer;
+}
+.showcase-prev { left: 4px; }
+.showcase-next { right: 4px; }
+.showcase-arrow svg {
+  width: 15px; height: 24px; overflow: visible;
+  fill: var(--purple); stroke: var(--lavender); stroke-width: 1.4; stroke-linejoin: round;
+  transition: transform .15s ease, fill .15s ease;
+}
+.showcase-arrow:hover svg, .showcase-arrow:focus-visible svg { fill: var(--lash); }
+.showcase-prev svg { transform: scaleX(-1); }
+.showcase-prev:hover svg { transform: scaleX(-1) translateX(2px); }
+.showcase-next:hover svg { transform: translateX(2px); }
 .showcase-text { margin-top: .8rem; max-width: 860px; margin-inline: auto; text-align: center; }
 .showcase-text h2 { font-size: clamp(1.3rem, 2.6vw, 1.85rem); }
 .showcase:hover .showcase-text h2 { color: var(--purple); }
 .showcase-text .lede { margin: .6rem auto 0; font-size: 1rem; max-width: 60ch; }
-@media (max-width: 640px) { .showcase-frame { aspect-ratio: 12 / 5; max-height: 52vh; } }
+@media (max-width: 640px) {
+  .showcase-frame { aspect-ratio: 12 / 5; max-height: 52vh; }
+  .showcase-nav { max-height: 52vh; }
+  .showcase-prev { left: 0; }
+  .showcase-next { right: 0; }
+  .showcase-arrow svg { width: 12px; height: 20px; }
+}
 
 /* ---------- filter dropdown ---------- */
 .filter-bar { position: relative; z-index: 40; display: flex; align-items: center;
