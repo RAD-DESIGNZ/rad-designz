@@ -1,5 +1,5 @@
 ---
-order: 20
+order: 3
 title: Elenis Sima
 year: 2026
 client: www.elenissima.com
@@ -23,5 +23,5 @@ gallery:
   - /uploads/ess6.webp
 tools: []
 link: ''
-featured: false
+featured: true
 ---
