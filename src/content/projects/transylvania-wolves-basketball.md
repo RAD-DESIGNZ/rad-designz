@@ -25,14 +25,13 @@ gallery:
   - /uploads/u17.webp
   - /uploads/u17-a3.webp
   - /uploads/transylvania-wolves-stories.webp
-  - /uploads/tw-poster10.webp
   - /uploads/social-post-napoca-wolves0.webp
   - /uploads/cover3.webp
   - /uploads/transylvania-wolves-fb-post.webp
   - /uploads/tb-post-varianta-1-copy-2-100.webp
   - /uploads/siroptw-bottle-mockup.webp
   - /uploads/t-shirt-mockupt-turda-wolves.webp
-  - /uploads/turda-wolves-1920x1080-wallpaper.webp
+  - /uploads/tshirt-mockup-afs10.webp
 tools: []
 link: ''
 featured: true
