@@ -9,6 +9,7 @@ summary: Formula 1 Landing Page Design for Mobile Appp
 cover: /uploads/f11.webp
 gallery:
   - /uploads/f1.webp
+  - /uploads/f1.webp
 tools: []
 link: ''
 featured: false
