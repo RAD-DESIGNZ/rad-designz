@@ -21,7 +21,9 @@ summary: |-
 
   The pattern repeats that mark until it becomes texture — tread
   across a surface rather than a logo pasted on it.
-cover: /uploads/tailwhip-billboard-mockup.webp
+cover: /uploads/tailwhipblack-jpg.webp
+cover_animated: ''
+cover_animated_start: ''
 gallery:
   - /uploads/tailwhipblack-jpg.webp
   - /uploads/tailwhip-billboard-mockup.webp
