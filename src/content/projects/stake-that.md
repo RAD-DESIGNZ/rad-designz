@@ -21,5 +21,5 @@ gallery:
   - /uploads/stake-tha8.webp
 tools: []
 link: ''
-featured: false
+featured: true
 ---
