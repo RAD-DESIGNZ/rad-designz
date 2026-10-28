@@ -17,5 +17,5 @@ gallery:
   - /uploads/Dvision Shampoo.jpg
 tools: []
 link: www.dvision.studio
-featured: false
+featured: true
 ---
