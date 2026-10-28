@@ -8,6 +8,8 @@ category:
   - logo
 summary: New Logo Design for PASH - Piese Auto Second Hand 🔧 an online platform for selling second hand car parts.
 cover: /uploads/screenshot-2026-10-12-131221.webp
+cover_animated: /uploads/anim/pash-brand-identity.webp
+cover_animated_start: /uploads/anim/pash-brand-identity-start.webp
 gallery:
   - /uploads/screenshot-2026-10-12-131221.webp
   - /uploads/screenshot-2026-10-12-131237.webp

@@ -20,6 +20,8 @@ summary: |-
   The result
   An identity recognizable across all four fields, owned by none.
 cover: /uploads/logo-badge.webp
+cover_animated: /uploads/anim/domnul-ics-visual-identity.webp
+cover_animated_start: /uploads/anim/domnul-ics-visual-identity-start.webp
 gallery:
   - /uploads/domnul-ics-01.webp
   - /uploads/domnul-ics-02.webp

@@ -13,6 +13,8 @@ summary: |-
 
   We translated this bold identity into a distinctive visual concept, merging the final two “S” letters into intertwined snake forms — a symbol of rebellion, transformation, and untamed elegance.
 cover: /uploads/ess1.webp
+cover_animated: /uploads/anim/elenis-sima.webp
+cover_animated_start: /uploads/anim/elenis-sima-start.webp
 gallery:
   - /uploads/ess1.webp
   - /uploads/ess.webp

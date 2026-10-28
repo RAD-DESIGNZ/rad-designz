@@ -9,6 +9,8 @@ category:
   - illustration
 summary: Stake That Logo Design  and Website Design
 cover: /uploads/stake-that1.webp
+cover_animated: /uploads/anim/stake-that.webp
+cover_animated_start: /uploads/anim/stake-that-start.webp
 gallery:
   - /uploads/stake-that1.webp
   - /uploads/stake-tha43.webp

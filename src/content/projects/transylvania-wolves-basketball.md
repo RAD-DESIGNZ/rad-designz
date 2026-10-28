@@ -19,6 +19,8 @@ summary: |-
   both cities, t-shirts, stickers, magnets and sponsor drink labels
   — plus the social side: campaigns, banners, posts and stories.
 cover: /uploads/artboard-38.webp
+cover_animated: /uploads/anim/transylvania-wolves-basketball.webp
+cover_animated_start: /uploads/anim/transylvania-wolves-basketball-start.webp
 gallery:
   - /uploads/artboard-38.webp
   - /uploads/four-part-wolf-basketball-logo-grid.webp

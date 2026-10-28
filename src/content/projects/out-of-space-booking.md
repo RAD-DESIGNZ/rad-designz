@@ -20,6 +20,8 @@ summary: |-
   One mark that works on a wall, a shirt and an avatar without a
   single variation.
 cover: /uploads/ous-logo_3-social.webp
+cover_animated: /uploads/anim/out-of-space-booking.webp
+cover_animated_start: /uploads/anim/out-of-space-booking-start.webp
 gallery:
   - /uploads/out-of-space-face.webp
   - /uploads/ous-logo-mockup.webp

@@ -54,6 +54,8 @@ collections:
           - { label: "Editorial design", value: "editorial" }
       - { name: "summary", label: "Short description", widget: "text", hint: "One or two sentences. Shown under the title." }
       - { name: "cover", label: "Cover image", widget: "image", hint: "Any size — it is resized and converted automatically on upload." }
+      - { name: "cover_animated", label: "Animated cover (optional)", widget: "image", required: false, hint: "Animated WebP that plays once when the card appears. Leave empty for a still cover." }
+      - { name: "cover_animated_start", label: "Animated cover — first frame (optional)", widget: "image", required: false, hint: "Still image of the animation's first frame, shown until it starts." }
       - name: "gallery"
         label: "Gallery"
         widget: "image"

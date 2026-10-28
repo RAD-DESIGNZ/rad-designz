@@ -14,6 +14,8 @@ summary: |-
 
   Romania, 2019
 cover: /uploads/artboard-14mdpi.webp
+cover_animated: /uploads/anim/bio-garden.webp
+cover_animated_start: /uploads/anim/bio-garden-start.webp
 gallery:
   - /uploads/artboard-16mdpi.webp
   - /uploads/artboard-15mdpi.webp

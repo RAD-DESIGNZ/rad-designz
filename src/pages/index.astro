@@ -24,7 +24,7 @@ const slides = shown.map(p => ({
   <section class="hero">
     <div class="wrap hero-in">
       <div class="hero-text">
-        <h1>Rad <span>Designz</span></h1>
+        <h1 class="sr-only">RAD DESIGNZ</h1>
         <p class="lede hero-lede">
           We design brands and everything they touch.
         </p>
@@ -78,6 +78,8 @@ const slides = shown.map(p => ({
               year={p.data.year}
               categories={p.data.category}
               summary={p.data.summary}
+              coverAnimated={p.data.cover_animated}
+              coverStart={p.data.cover_animated_start}
             />
           ))}
         </div>
@@ -97,28 +99,36 @@ const slides = shown.map(p => ({
     const imgs = Array.from(frame.querySelectorAll<HTMLImageElement>('img'));
     const elTitle = document.getElementById('showcase-title')!;
 
-    /** Average the pixels around an image's border, so the letterbox matches it. */
+    /** The most common colour around an image's border, as one flat colour,
+     *  so the letterbox matches the image's own background. Runs for every
+     *  image, so new or changed project covers match automatically. */
     const edgeColour = (img: HTMLImageElement): string => {
       try {
-        const n = 24;
+        const n = 48;
         const c = document.createElement('canvas');
         c.width = n; c.height = n;
         const ctx = c.getContext('2d', { willReadFrequently: true });
         if (!ctx) return '';
         ctx.drawImage(img, 0, 0, n, n);
         const d = ctx.getImageData(0, 0, n, n).data;
-        let r = 0, g = 0, b = 0, count = 0;
+        const buckets = new Map<number, [number, number, number, number]>();
         for (let y = 0; y < n; y++) {
           for (let x = 0; x < n; x++) {
             const onEdge = x < 2 || y < 2 || x > n - 3 || y > n - 3;
             if (!onEdge) continue;
             const i = (y * n + x) * 4;
             if (d[i + 3] < 200) continue;
-            r += d[i]; g += d[i + 1]; b += d[i + 2]; count++;
+            const key = ((d[i] >> 4) << 8) | ((d[i + 1] >> 4) << 4) | (d[i + 2] >> 4);
+            const b = buckets.get(key) || [0, 0, 0, 0];
+            b[0] += d[i]; b[1] += d[i + 1]; b[2] += d[i + 2]; b[3]++;
+            buckets.set(key, b);
           }
         }
-        if (!count) return '';
-        return `rgb(${Math.round(r / count)}, ${Math.round(g / count)}, ${Math.round(b / count)})`;
+        let best: [number, number, number, number] | null = null;
+        buckets.forEach(b => { if (!best || b[3] > best[3]) best = b; });
+        if (!best) return '';
+        const [r, g, bl, k] = best;
+        return `rgb(${Math.round(r / k)}, ${Math.round(g / k)}, ${Math.round(bl / k)})`;
       } catch {
         return '';
       }

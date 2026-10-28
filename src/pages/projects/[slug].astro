@@ -12,6 +12,8 @@ const { project } = Astro.props;
 const d = project.data;
 const { Content } = await render(project);
 const disciplines = sortCategories(d.category).map(labelFor);
+// Brand identity and logo projects show their cover logo beside the description.
+const showLogo = [d.category].flat().some((c) => c === 'branding' || c === 'logo');
 
 /** "domnulics.ro" -> "https://domnulics.ro". Plain words like "Personal" stay text. */
 const asUrl = (v: string): string | null => {
@@ -30,8 +32,18 @@ const STICKERS = ['tv', 'floppy', 'console'];
     <header class="proj-head">
       <div class="wrap">
         <a class="back" href="/projects">Back to projects</a>
-        <h1 style="font-size:clamp(2.2rem,6vw,4rem);margin-top:1.25rem">{d.title}</h1>
-        <p class="lede" style="margin-top:1.25rem">{d.summary}</p>
+        <div class:list={['proj-intro', { 'has-logo': showLogo }]}>
+          <div class="proj-intro-text">
+            <h1 style="font-size:clamp(2.2rem,6vw,4rem);margin-top:1.25rem">{d.title}</h1>
+            <p class="lede" style="margin-top:1.25rem">{d.summary}</p>
+          </div>
+          {showLogo && (
+            <figure class="proj-logo">
+              <img src={d.cover} alt={`${d.title} logo`} width="600" height="600"
+                data-anim={d.cover_animated} data-start={d.cover_animated_start} />
+            </figure>
+          )}
+        </div>
 
         <dl class="proj-facts">
           {siteUrl && (
@@ -63,10 +75,19 @@ const STICKERS = ['tv', 'floppy', 'console'];
         <Content />
 
         {d.gallery.length > 0 && (
-          <div class="gallery" data-sticker={(d.order + 2) % 3}>
+          <div class="gallery">
             {d.gallery.map((src, i) => (
               <img src={src} alt={`${d.title}, image ${i + 1}`} loading="lazy" />
             ))}
+          </div>
+        )}
+        {d.gallery.length > 0 && (
+          <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" hidden>
+            <img class="lb-img" id="lb-img" alt="" draggable="false" />
+            <button type="button" class="showcase-arrow showcase-prev lb-prev" id="lb-prev" aria-label="Previous image"><svg viewBox="0 0 16 26" aria-hidden="true"><polygon points="1.5,1.5 7.5,1.5 15,13 7.5,24.5 1.5,24.5 9.5,13" /></svg></button>
+            <button type="button" class="showcase-arrow showcase-next lb-next" id="lb-next" aria-label="Next image"><svg viewBox="0 0 16 26" aria-hidden="true"><polygon points="1.5,1.5 7.5,1.5 15,13 7.5,24.5 1.5,24.5 9.5,13" /></svg></button>
+            <button type="button" class="lb-close" id="lb-close" aria-label="Close">&times;</button>
+            <p class="lb-count" id="lb-count"></p>
           </div>
         )}
       </div>
@@ -76,31 +97,89 @@ const STICKERS = ['tv', 'floppy', 'console'];
 
 <script>
   // Gallery: two even columns; wide banners get their own centred row.
-  // A tall image left alone in its row gets a sticker illustration beside it.
   const gallery = document.querySelector<HTMLElement>('.gallery');
   if (gallery) {
-    const STICKERS = ['tv', 'floppy', 'console'];
     const imgs = Array.from(gallery.querySelectorAll<HTMLImageElement>('img'));
-    const isWide = (img?: HTMLImageElement) => !!img && img.naturalWidth / Math.max(img.naturalHeight, 1) > 1.5;
-    const ready = (img: HTMLImageElement) =>
-      img.complete && img.naturalWidth ? Promise.resolve() :
-      new Promise<void>(res => { img.addEventListener('load', () => res(), { once: true }); img.addEventListener('error', () => res(), { once: true }); });
+    const mark = (img: HTMLImageElement) => {
+      if (img.naturalWidth / Math.max(img.naturalHeight, 1) > 1.5) img.classList.add('is-wide');
+    };
+    imgs.forEach(img => img.complete && img.naturalWidth ? mark(img) : img.addEventListener('load', () => mark(img), { once: true }));
+  }
+</script>
 
-    Promise.all(imgs.map(ready)).then(() => {
-      let col = 0, sticker = Number(gallery.dataset.sticker || 0);
-      imgs.forEach((img, n) => {
-        if (isWide(img)) { img.classList.add('is-wide'); col = 0; return; }
-        col++;
-        const next = imgs[n + 1];
-        if (col % 2 === 1 && (!next || isWide(next))) {
-          const s = document.createElement('img');
-          s.src = `/illustrations/${STICKERS[sticker++ % STICKERS.length]}.webp`;
-          s.alt = ''; s.setAttribute('aria-hidden', 'true');
-          s.className = 'gallery-sticker';
-          img.after(s);
-          col++;
-        }
-      });
+<script>
+  // Lightbox: every gallery image opens full size; arrows, swipe, Esc and
+  // the left/right keys move through them.
+  const box = document.getElementById('lightbox');
+  const gal = document.querySelector<HTMLElement>('.gallery');
+  if (box && gal) {
+    // Live at the top level so it sits above the nav and the pinned eye.
+    document.body.appendChild(box);
+    const big = document.getElementById('lb-img') as HTMLImageElement;
+    const count = document.getElementById('lb-count')!;
+    const closeBtn = document.getElementById('lb-close') as HTMLButtonElement;
+    const pics = () => Array.from(gal.querySelectorAll<HTMLImageElement>('img'));
+    let at = 0, opener: HTMLElement | null = null, byKeyboard = false;
+
+    const show = (n: number) => {
+      const list = pics();
+      at = (n + list.length) % list.length;
+      big.src = list[at].currentSrc || list[at].src;
+      big.alt = list[at].alt;
+      count.textContent = `${at + 1} / ${list.length}`;
+    };
+    const open = (img: HTMLImageElement) => {
+      opener = img;
+      show(pics().indexOf(img));
+      box.hidden = false;
+      document.documentElement.style.overflow = 'hidden';
+      closeBtn.focus();
+    };
+    const close = () => {
+      box.hidden = true;
+      document.documentElement.style.overflow = '';
+      // Hand focus back only to keyboard users, so mouse users get no outline.
+      if (byKeyboard) opener?.focus();
+    };
+
+    pics().forEach(img => { img.tabIndex = 0; img.setAttribute('role', 'button'); });
+    gal.addEventListener('click', (e) => {
+      const img = (e.target as HTMLElement).closest('img');
+      if (img) { byKeyboard = false; open(img as HTMLImageElement); }
     });
+    gal.addEventListener('keydown', (e) => {
+      const img = (e.target as HTMLElement).closest('img');
+      if (img && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); byKeyboard = true; open(img as HTMLImageElement); }
+    });
+
+    document.getElementById('lb-prev')!.addEventListener('click', () => show(at - 1));
+    document.getElementById('lb-next')!.addEventListener('click', () => show(at + 1));
+    closeBtn.addEventListener('click', close);
+    box.addEventListener('click', (e) => { if (e.target === box) close(); });
+    document.addEventListener('keydown', (e) => {
+      if (box.hidden) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowLeft') show(at - 1);
+      if (e.key === 'ArrowRight') show(at + 1);
+    });
+
+    let sx: number | null = null;
+    box.addEventListener('pointerdown', (e) => { sx = e.clientX; });
+    box.addEventListener('pointercancel', () => { sx = null; });
+    box.addEventListener('pointerup', (e) => {
+      if (sx === null) return;
+      const dx = e.clientX - sx; sx = null;
+      if (Math.abs(dx) > 50) show(at + (dx < 0 ? 1 : -1));
+    });
+  }
+</script>
+
+<script>
+  // The logo beside the description plays its animation once on arrival.
+  const logo = document.querySelector<HTMLImageElement>('.proj-logo img[data-anim]');
+  if (logo && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const url = logo.dataset.anim!;
+    if (logo.dataset.start) logo.src = logo.dataset.start;
+    fetch(url).then(() => { logo.src = url; }).catch(() => { logo.src = url; });
   }
 </script>

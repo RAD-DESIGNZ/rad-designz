@@ -8,14 +8,17 @@ interface Props {
   year: number;
   categories: string[];
   summary?: string;
+  coverAnimated?: string;
+  coverStart?: string;
 }
-const { href, title, cover, year, categories, summary } = Astro.props;
+const { href, title, cover, year, categories, summary, coverAnimated, coverStart } = Astro.props;
 const ordered = sortCategories(categories);
 const labels = ordered.map(labelFor).join(' · ');
 ---
 <a class="card" href={href} data-category={ordered.join(' ')}>
   <div class="card-img">
-    <img src={cover} alt={`Cover image for ${title}`} loading="lazy" width="800" height="600" />
+    <img src={cover} alt={`Cover image for ${title}`} loading="lazy" width="800" height="600"
+      data-anim={coverAnimated} data-start={coverStart} />
   </div>
   <div class="card-body">
     <h3>{title}</h3>
@@ -23,3 +26,24 @@ const labels = ordered.map(labelFor).join(' · ');
     <p class="card-meta">{labels} — {year}</p>
   </div>
 </a>
+
+<script>
+  // Animated covers play once when the card scrolls into view, then stay on
+  // the finished logo. Without JS or with reduced motion the still cover shows.
+  const imgs = Array.from(document.querySelectorAll<HTMLImageElement>('.card-img img[data-anim]'));
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (imgs.length && !reduce && 'IntersectionObserver' in window) {
+    imgs.forEach(img => { if (img.dataset.start) img.src = img.dataset.start; });
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        const img = e.target as HTMLImageElement;
+        io.unobserve(img);
+        const url = img.dataset.anim!;
+        // Download first, then swap, so the animation starts from its first frame.
+        fetch(url).then(() => { img.src = url; }).catch(() => { img.src = url; });
+      });
+    }, { threshold: 0.35 });
+    imgs.forEach(img => io.observe(img));
+  }
+</script>

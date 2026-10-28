@@ -10,6 +10,8 @@ category:
   - print
 summary: A Japanese flower shop is a place where one can find a variety of beautiful flowers and plants. In Japan, flower arrangement, or "ikebana," is an art form that has been practiced for centuries. A traditional Japanese flower shop may offer a range of ikebana arrangements, as well as a selection of individual flowers and plants for customers to choose from.
 cover: /uploads/2126f9158959689.6395ad09ef3aa.webp
+cover_animated: /uploads/anim/flower-box-logo-and-packaging-design.webp
+cover_animated_start: /uploads/anim/flower-box-logo-and-packaging-design-start.webp
 gallery:
   - /uploads/b8148c158959689.6395ad09f2641.webp
   - /uploads/584ed2158959689.6395ad09f0553.webp

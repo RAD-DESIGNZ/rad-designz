@@ -12,6 +12,8 @@ summary: |-
   Satori Cryptocurrency [Market, Blog, Updates, Faucets]
   Brand Identity
 cover: /uploads/screenshot-2026-10-12-141428.webp
+cover_animated: /uploads/anim/satori-crypto-brand-identity.webp
+cover_animated_start: /uploads/anim/satori-crypto-brand-identity-start.webp
 gallery:
   - /uploads/screenshot-2026-10-12-141428.webp
   - /uploads/screenshot-2026-10-12-141525.webp

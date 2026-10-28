@@ -15,6 +15,9 @@ const projects = defineCollection({
       .transform(v => (Array.isArray(v) ? v : [v])),
     summary: z.string(),
     cover: z.string(),
+    // optional animated cover (plays once when the card scrolls into view) and its first frame
+    cover_animated: z.string().optional(),
+    cover_animated_start: z.string().optional(),
     gallery: z.array(z.string()).default([]),
     tools: z.array(z.string()).default([]),
     link: z.string().optional(),
