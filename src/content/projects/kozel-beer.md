@@ -8,8 +8,8 @@ category:
   - illustration
 summary: For the Kozel Beer design competition, I reimagined the iconic logo with a fresh, minimalist approach. I illustrated the signature goat holding two beers — one dark and one light — while preserving the brand's classic colors and typography. The result blends Kozel's traditional identity with a cleaner, more modern and minimalist visual style.
 cover: /uploads/artboard2.webp
-cover_animated: ''
-cover_animated_start: ''
+cover_animated: /uploads/anim/kozel-beer.webp
+cover_animated_start: /uploads/anim/kozel-beer-start.webp
 gallery:
   - /uploads/kozel-white-logopng1.webp
   - /uploads/artboard1_2.webp

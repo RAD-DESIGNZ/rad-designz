@@ -96,7 +96,9 @@ const STICKERS = ['tv', 'floppy', 'console'];
 </Base>
 
 <script>
+  import { cleanWhenLoaded } from '../../lib/cleanEdges';
   // Gallery: two even columns; wide banners get their own centred row.
+  // Thin light lines along image edges are painted over with the image's own colour.
   const gallery = document.querySelector<HTMLElement>('.gallery');
   if (gallery) {
     const imgs = Array.from(gallery.querySelectorAll<HTMLImageElement>('img'));
@@ -104,6 +106,7 @@ const STICKERS = ['tv', 'floppy', 'console'];
       if (img.naturalWidth / Math.max(img.naturalHeight, 1) > 1.5) img.classList.add('is-wide');
     };
     imgs.forEach(img => img.complete && img.naturalWidth ? mark(img) : img.addEventListener('load', () => mark(img), { once: true }));
+    imgs.forEach(cleanWhenLoaded);
   }
 </script>
 

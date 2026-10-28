@@ -28,6 +28,10 @@ const labels = ordered.map(labelFor).join(' · ');
 </a>
 
 <script>
+  import { cleanWhenLoaded } from '../lib/cleanEdges';
+  // Still covers: paint over thin light lines along the edges, if any.
+  document.querySelectorAll<HTMLImageElement>('.card-img img:not([data-anim])').forEach(cleanWhenLoaded);
+
   // Animated covers play once when the card scrolls into view, then stay on
   // the finished logo. Without JS or with reduced motion the still cover shows.
   const imgs = Array.from(document.querySelectorAll<HTMLImageElement>('.card-img img[data-anim]'));
