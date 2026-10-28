@@ -8,7 +8,7 @@ category:
   - visual
 summary: ORA - Handmade Leather Products
 cover: /uploads/ora-logo-fundal-alb.webp
-cover_animated: /uploads/anim/ora-craft-shop.webp
+cover_animated: /uploads/anim/ora-craft-shop-blink.webp
 cover_animated_start: /uploads/anim/ora-craft-shop-start.webp
 gallery:
   - /uploads/ora-logo-animation-negru.gif
