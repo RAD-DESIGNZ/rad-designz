@@ -1,5 +1,5 @@
 ---
-order: 19
+order: 20
 title: Stake That
 year: 2026
 client: stakethat.io
