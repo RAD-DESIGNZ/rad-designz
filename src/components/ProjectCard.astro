@@ -18,7 +18,7 @@ const labels = ordered.map(labelFor).join(' · ');
 <a class="card" href={href} data-category={ordered.join(' ')}>
   <div class="card-img">
     <img src={cover} alt={`Cover image for ${title}`} loading="lazy" width="800" height="600"
-      data-anim={coverAnimated} data-start={coverStart} />
+      data-anim={coverAnimated || undefined} data-start={coverStart || undefined} />
   </div>
   <div class="card-body">
     <h3>{title}</h3>
@@ -39,7 +39,8 @@ const labels = ordered.map(labelFor).join(' · ');
         if (!e.isIntersecting) return;
         const img = e.target as HTMLImageElement;
         io.unobserve(img);
-        const url = img.dataset.anim!;
+        const url = img.dataset.anim;
+        if (!url) return;
         // Download first, then swap, so the animation starts from its first frame.
         fetch(url).then(() => { img.src = url; }).catch(() => { img.src = url; });
       });

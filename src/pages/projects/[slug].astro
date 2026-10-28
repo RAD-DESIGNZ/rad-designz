@@ -40,7 +40,7 @@ const STICKERS = ['tv', 'floppy', 'console'];
           {showLogo && (
             <figure class="proj-logo">
               <img src={d.cover} alt={`${d.title} logo`} width="600" height="600"
-                data-anim={d.cover_animated} data-start={d.cover_animated_start} />
+                data-anim={d.cover_animated || undefined} data-start={d.cover_animated_start || undefined} />
             </figure>
           )}
         </div>
@@ -177,8 +177,8 @@ const STICKERS = ['tv', 'floppy', 'console'];
 <script>
   // The logo beside the description plays its animation once on arrival.
   const logo = document.querySelector<HTMLImageElement>('.proj-logo img[data-anim]');
-  if (logo && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const url = logo.dataset.anim!;
+  if (logo && logo.dataset.anim && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const url = logo.dataset.anim;
     if (logo.dataset.start) logo.src = logo.dataset.start;
     fetch(url).then(() => { logo.src = url; }).catch(() => { logo.src = url; });
   }
