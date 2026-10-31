@@ -1,6 +1,7 @@
 ---
 order: 19
 title: Project Wheel
+discipline: ui-web
 year: 2026
 client: ''
 category:

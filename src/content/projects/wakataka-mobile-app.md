@@ -1,6 +1,7 @@
 ---
 order: 15
 title: WakaTaka Mobile App
+discipline: ui-web
 year: 2026
 client: WakaTaka
 category:

@@ -1,6 +1,7 @@
 ---
 order: 6
 title: Out of Space Booking
+discipline: logo
 year: 2026
 client: Out of Space Music Booking
 category:

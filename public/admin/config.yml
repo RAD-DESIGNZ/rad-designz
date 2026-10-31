@@ -34,12 +34,22 @@ collections:
       - { name: "title", label: "Project title", widget: "string" }
       - { name: "year", label: "Year", widget: "number", value_type: "int", min: 2000, max: 2100, default: 2026 }
       - { name: "client", label: "Site", widget: "string", required: false, hint: "A domain like domnulics.ro. Leave empty if the project has no site." }
+      - name: "discipline"
+        label: "Main discipline (filter)"
+        widget: "select"
+        hint: "The one filter this project appears under on the Projects page, and the purple subtitle on its card."
+        options:
+          - { label: "Brand identity", value: "branding" }
+          - { label: "Logo", value: "logo" }
+          - { label: "Packaging", value: "packaging" }
+          - { label: "UI/UX & web", value: "ui-web" }
+          - { label: "Visual & social media", value: "visual-social" }
       - name: "category"
-        label: "Disciplines"
+        label: "Disciplines (tags on project page)"
         widget: "select"
         multiple: true
         min: 1
-        hint: "Pick every discipline this project involved. Filters on the Projects page appear only for disciplines that are actually used."
+        hint: "Every discipline this project involved. Shown on the project page only."
         options:
           - { label: "Brand identity", value: "branding" }
           - { label: "Logo", value: "logo" }

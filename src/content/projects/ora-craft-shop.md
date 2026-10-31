@@ -1,6 +1,7 @@
 ---
 order: 10
 title: ORA - Craft Shop
+discipline: logo
 year: 2024
 client: ORA - Craft Shop
 category:

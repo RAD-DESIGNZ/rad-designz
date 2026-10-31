@@ -1,6 +1,7 @@
 ---
 order: 18
 title: Stake That
+discipline: logo
 year: 2026
 client: stakethat.io
 category:

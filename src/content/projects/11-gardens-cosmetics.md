@@ -1,6 +1,7 @@
 ---
 order: 2
 title: 11 Gardens - Cosmetics
+discipline: branding
 year: 2025
 client: Personal
 category: branding

@@ -1,6 +1,7 @@
 ---
 order: 13
 title: Sustainable Vibe
+discipline: branding
 year: 2024
 client: ''
 category:

@@ -132,9 +132,9 @@ const links = [
     const loop = () => {
       window.setTimeout(() => {
         blink();
-        if (Math.random() < 0.2) window.setTimeout(blink, 260);
+        if (Math.random() < 0.3) window.setTimeout(blink, 260);
         loop();
-      }, 4000 + Math.random() * 5000);
+      }, 1500 + Math.random() * 2500);
     };
     loop();
     go();

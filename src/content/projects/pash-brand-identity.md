@@ -1,6 +1,7 @@
 ---
 order: 8
 title: PASH - Piese Auto Second Hand
+discipline: branding
 year: 2024
 client: www.pash.ro
 category:

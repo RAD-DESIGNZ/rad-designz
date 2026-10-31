@@ -1,6 +1,7 @@
 ---
 order: 9
 title: Accesa - Town Hall Presentation
+discipline: visual-social
 year: 2024
 client: www.accesa.eu
 category:

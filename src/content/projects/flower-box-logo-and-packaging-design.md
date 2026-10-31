@@ -1,6 +1,7 @@
 ---
 order: 7
 title: Flower Box - Gift Shop
+discipline: packaging
 year: 2025
 client: Flower Box
 category:

@@ -2,34 +2,26 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import { CATEGORIES } from '../lib/categories';
+import { DISCIPLINES, disciplineOf } from '../lib/categories';
 
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 
 const filters = [
   { key: 'all', label: 'All' },
-  ...CATEGORIES.map(c => ({ key: c.value, label: c.label }))
+  ...DISCIPLINES.map(c => ({ key: c.value, label: c.label }))
 ];
 ---
-<Base title="Projects — RAD DESIGNZ" description="Brand identity, logo, packaging and creative direction work by RAD DESIGNZ.">
+<Base title="Projects — RAD DESIGNZ" description="Brand identity, logo, packaging, UI/UX and visual design work by RAD DESIGNZ.">
   <section class="sec">
     <div class="wrap">
       <img class="deco deco-bg deco-bg-tr" src="/illustrations/camera.webp" alt="" aria-hidden="true" loading="lazy" decoding="async" />
       <div class="sec-head"><h2>Projects</h2></div>
 
       <div class="filter-bar">
-        <div class="filter-wrap">
-          <button class="filter-toggle" id="filter-toggle" aria-expanded="false" aria-controls="filter-panel">
-            <span class="ft-key">Discipline</span>
-            <span class="ft-val" id="filter-current">All</span>
-            <span class="ft-caret" aria-hidden="true"></span>
-          </button>
-          <div class="filter-panel" id="filter-panel" role="listbox" aria-label="Filter projects by discipline" hidden>
-            {filters.map((f, i) => (
-              <button class="filter-opt" role="option" data-filter={f.key}
-                      aria-selected={i === 0 ? 'true' : 'false'}>{f.label}</button>
-            ))}
-          </div>
+        <div class="chips" role="group" aria-label="Filter projects by discipline">
+          {filters.map((f, i) => (
+            <button class="chip" data-filter={f.key} aria-pressed={i === 0 ? 'true' : 'false'}>{f.label}</button>
+          ))}
         </div>
         <p class="filter-count" id="filter-count"></p>
       </div>
@@ -48,6 +40,7 @@ const filters = [
               summary={p.data.summary}
               coverAnimated={p.data.cover_animated}
               coverStart={p.data.cover_animated_start}
+              discipline={disciplineOf(p.data)}
             />
           ))}
         </div>
@@ -58,66 +51,30 @@ const filters = [
 </Base>
 
 <script>
-  const toggle = document.getElementById('filter-toggle') as HTMLButtonElement | null;
-  const panel = document.getElementById('filter-panel');
-  const current = document.getElementById('filter-current');
   const count = document.getElementById('filter-count');
-  const opts = document.querySelectorAll<HTMLButtonElement>('.filter-opt');
+  const opts = document.querySelectorAll<HTMLButtonElement>('.chip');
   const cards = document.querySelectorAll<HTMLElement>('#project-grid .card');
   const none = document.getElementById('no-results');
 
-  const setOpen = (open: boolean) => {
-    if (!panel || !toggle) return;
-    panel.hidden = !open;
-    toggle.setAttribute('aria-expanded', String(open));
-  };
-
-  const apply = (key: string, label: string) => {
+  // Each project belongs to exactly one discipline.
+  const apply = (key: string) => {
     let visible = 0;
     cards.forEach(card => {
-      const own = (card.dataset.category ?? '').split(' ').filter(Boolean);
-      const match = key === 'all' || own.includes(key);
+      const match = key === 'all' || card.dataset.discipline === key;
       card.style.display = match ? '' : 'none';
       if (match) visible++;
     });
-    if (current) current.textContent = label;
+    opts.forEach(o => o.setAttribute('aria-pressed', String(o.dataset.filter === key)));
     if (none) none.hidden = visible !== 0;
     if (count) count.textContent = visible === cards.length
       ? `${cards.length} project${cards.length === 1 ? '' : 's'}`
       : `${visible} of ${cards.length}`;
   };
 
-  toggle?.addEventListener('click', () => setOpen(panel?.hidden ?? false));
-
-  opts.forEach(opt => {
-    opt.addEventListener('click', () => {
-      opts.forEach(o => o.setAttribute('aria-selected', String(o === opt)));
-      apply(opt.dataset.filter ?? 'all', opt.textContent ?? 'All');
-      setOpen(false);
-      toggle?.focus();
-    });
-  });
-
-  document.addEventListener('click', e => {
-    if (!panel || panel.hidden) return;
-    const t = e.target as Element | null;
-    if (!t || !t.closest('.filter-wrap')) setOpen(false);
-  });
-
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && panel && !panel.hidden) { setOpen(false); toggle?.focus(); }
-  });
+  opts.forEach(opt => opt.addEventListener('click', () => apply(opt.dataset.filter ?? 'all')));
 
   // Arriving from About: /projects?d=branding pre-selects that discipline.
   const wanted = new URLSearchParams(location.search).get('d');
-  const preset = wanted
-    ? Array.from(opts).find(o => o.dataset.filter === wanted)
-    : undefined;
-
-  if (preset) {
-    opts.forEach(o => o.setAttribute('aria-selected', String(o === preset)));
-    apply(preset.dataset.filter ?? 'all', preset.textContent ?? 'All');
-  } else {
-    apply('all', 'All');
-  }
+  const known = Array.from(opts).some(o => o.dataset.filter === wanted);
+  apply(wanted && known ? wanted : 'all');
 </script>

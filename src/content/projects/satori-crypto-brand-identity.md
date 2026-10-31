@@ -1,6 +1,7 @@
 ---
 order: 14
 title: Satori -  Crypto Market
+discipline: branding
 year: 2024
 client: ''
 category:

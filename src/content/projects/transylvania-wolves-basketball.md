@@ -1,6 +1,7 @@
 ---
 order: 1
 title: Transylvania Wolves - Basketball
+discipline: branding
 year: 2026
 client: www.transylvaniawolves.ro
 category:

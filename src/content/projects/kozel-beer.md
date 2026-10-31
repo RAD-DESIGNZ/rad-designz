@@ -1,6 +1,7 @@
 ---
 order: 22
 title: Kozel Beer
+discipline: logo
 year: 2026
 client: www.kozelbeer.de
 category:

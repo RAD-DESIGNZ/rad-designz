@@ -1,6 +1,7 @@
 ---
 order: 4
 title: Elenis Sima
+discipline: branding
 year: 2026
 client: www.elenissima.com
 category:

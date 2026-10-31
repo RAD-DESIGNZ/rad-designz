@@ -1,6 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
-import { CATEGORY_VALUES } from './lib/categories';
+import { CATEGORY_VALUES, DISCIPLINE_VALUES } from './lib/categories';
 
 const discipline = z.enum(CATEGORY_VALUES);
 
@@ -13,6 +13,8 @@ const projects = defineCollection({
     // Accepts a single value (older entries) or a list (new entries).
     category: z.union([discipline, z.array(discipline).min(1)])
       .transform(v => (Array.isArray(v) ? v : [v])),
+    // The one discipline this project is filtered under on the Projects page.
+    discipline: z.enum(DISCIPLINE_VALUES).optional(),
     summary: z.string(),
     cover: z.string(),
     // optional animated cover (plays once when the card scrolls into view) and its first frame

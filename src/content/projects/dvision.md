@@ -1,6 +1,7 @@
 ---
 order: 17
 title: Dvision - Cut To Create
+discipline: branding
 year: 2021
 client: dvision.studio
 category:

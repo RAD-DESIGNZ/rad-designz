@@ -1,5 +1,5 @@
 ---
-import { labelFor, sortCategories } from '../lib/categories';
+import { labelFor, sortCategories, disciplineLabel } from '../lib/categories';
 
 interface Props {
   href: string;
@@ -10,11 +10,25 @@ interface Props {
   summary?: string;
   coverAnimated?: string;
   coverStart?: string;
+  // Projects page only: one discipline, shown as the purple subtitle (no summary).
+  discipline?: string;
 }
-const { href, title, cover, year, categories, summary, coverAnimated, coverStart } = Astro.props;
+const { href, title, cover, year, categories, summary, coverAnimated, coverStart, discipline } = Astro.props;
 const ordered = sortCategories(categories);
 const labels = ordered.map(labelFor).join(' · ');
 ---
+{discipline ? (
+<a class="card card--disc" href={href} data-discipline={discipline}>
+  <div class="card-img">
+    <img src={cover} alt={`Cover image for ${title}`} loading="lazy" width="800" height="600"
+      data-anim={coverAnimated || undefined} data-start={coverStart || undefined} />
+  </div>
+  <div class="card-body">
+    <h3>{title}</h3>
+    <p class="card-disc">{disciplineLabel(discipline)}</p>
+  </div>
+</a>
+) : (
 <a class="card" href={href} data-category={ordered.join(' ')}>
   <div class="card-img">
     <img src={cover} alt={`Cover image for ${title}`} loading="lazy" width="800" height="600"
@@ -26,6 +40,7 @@ const labels = ordered.map(labelFor).join(' · ');
     <p class="card-meta">{labels} — {year}</p>
   </div>
 </a>
+)}
 
 <script>
   import { cleanWhenLoaded } from '../lib/cleanEdges';

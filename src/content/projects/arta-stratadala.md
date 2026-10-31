@@ -1,6 +1,7 @@
 ---
 order: 12
 title: Arta Stradala
+discipline: branding
 year: 2025
 client: Arta Stradala - Brasov
 category:

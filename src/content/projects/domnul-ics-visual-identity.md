@@ -1,6 +1,7 @@
 ---
 order: 3
 title: Domnul ICS
+discipline: branding
 year: 2026
 client: www.domnulics.ro
 category:

@@ -1,6 +1,7 @@
 ---
 order: 5
 title: F64 - Digital Marketing
+discipline: visual-social
 year: 2026
 client: www.f64.ro
 category:

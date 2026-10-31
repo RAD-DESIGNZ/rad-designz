@@ -165,6 +165,16 @@ img { max-width: 100%; display: block; height: auto; }
 .card:hover h3 { color: var(--purple); }
 .card-summary { font-size: .85rem; color: #CFCFD8; margin: .4rem 0 0; line-height: 1.5; }
 .card-meta { font-size: .8rem; color: var(--gray); margin-top: .4rem; }
+/* Projects page card: panel, violet frame, title + purple discipline only */
+.card--disc { background: var(--surface); border: 3px solid var(--violet);
+  box-shadow: 5px 5px 0 var(--violet); padding: 10px; transition: transform .1s, box-shadow .1s; }
+.card--disc .card-img { border: 0; box-shadow: none; }
+.card--disc:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--violet); }
+.card--disc:hover .card-img { transform: none; box-shadow: none; }
+.card--disc .card-body { margin-top: .75rem; }
+.card--disc h3 { color: #F5F5F7; }
+.card--disc:hover h3 { color: #F5F5F7; }
+.card-disc { font-size: .8rem; font-weight: 600; color: var(--purple); margin: .3rem 0 0; }
 
 /* ---------- rotating showcase ---------- */
 .showcase { display: block; text-decoration: none; color: inherit; }
@@ -220,44 +230,18 @@ img { max-width: 100%; display: block; height: auto; }
   .showcase-arrow svg { width: 12px; height: 20px; }
 }
 
-/* ---------- filter dropdown ---------- */
-.filter-bar { position: relative; z-index: 40; display: flex; align-items: center;
-  justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
-.filter-wrap { position: relative; }
-
-.filter-toggle {
-  display: inline-flex; align-items: center; gap: .7rem;
-  font-family: var(--display); font-size: .76rem; text-transform: uppercase; letter-spacing: .06em;
-  padding: .8rem 1.2rem; border: 3px solid var(--purple); background: var(--surface);
-  color: #F2F2F5; cursor: pointer; box-shadow: 5px 5px 0 var(--violet);
-  transition: transform .12s ease, box-shadow .12s ease;
+/* ---------- discipline filter chips ---------- */
+.filter-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem 1.5rem;
+  flex-wrap: wrap; margin-bottom: 2rem; }
+.chips { display: flex; flex-wrap: wrap; gap: .75rem; }
+.chip {
+  font: inherit; font-size: .85rem; font-weight: 600; padding: .5rem .95rem; cursor: pointer;
+  border: 3px solid var(--purple); background: var(--ink); color: var(--lavender);
+  border-radius: 0; box-shadow: 4px 4px 0 var(--violet); transition: transform .08s, box-shadow .08s;
 }
-.filter-toggle:hover { transform: translate(2px, 2px); box-shadow: 3px 3px 0 var(--pink); }
-.filter-toggle[aria-expanded="true"] { box-shadow: 3px 3px 0 var(--pink); transform: translate(2px, 2px); }
-.ft-key { color: var(--gray); font-size: .68rem; }
-.ft-val { color: var(--purple); }
-.ft-caret { width: 0; height: 0; margin-left: .15rem;
-  border-left: 5px solid transparent; border-right: 5px solid transparent;
-  border-top: 7px solid var(--purple); transition: transform .14s ease; }
-.filter-toggle[aria-expanded="true"] .ft-caret { transform: rotate(180deg); }
-
-.filter-panel {
-  position: absolute; top: calc(100% + 10px); left: 0; z-index: 30;
-  min-width: 260px; max-height: 60vh; overflow-y: auto;
-  display: flex; flex-direction: column;
-  background: var(--surface); border: 3px solid var(--purple);
-  box-shadow: 8px 8px 0 var(--violet);
-  padding: .4rem;
-}
-.filter-panel[hidden] { display: none; }
-.filter-opt {
-  text-align: left; font-family: var(--display); font-size: .74rem;
-  text-transform: uppercase; letter-spacing: .05em;
-  padding: .65rem .8rem; border: 0; background: transparent;
-  color: var(--gray); cursor: pointer; width: 100%;
-}
-.filter-opt:hover { background: var(--elevated); color: #F2F2F5; }
-.filter-opt[aria-selected="true"] { background: var(--purple); color: var(--ink); }
+.chip:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--violet); }
+.chip:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--violet); }
+.chip[aria-pressed="true"] { background: var(--purple); color: var(--ink); }
 .filter-count { margin: 0; font-size: .8rem; color: var(--gray); }
 .empty { color: var(--gray); padding: 2rem 0; }
 .sec-head-bare { justify-content: flex-end; padding-bottom: .5rem; margin-bottom: 1.4rem; }
@@ -279,9 +263,8 @@ img { max-width: 100%; display: block; height: auto; }
 .see-all:hover::before { transform: translateX(3px); }
 
 @media (max-width: 520px) {
-  .filter-wrap, .filter-toggle { width: 100%; }
-  .filter-toggle { justify-content: space-between; }
-  .filter-panel { right: 0; min-width: 0; }
+  .chips { gap: .6rem; }
+  .chip { font-size: .8rem; padding: .45rem .8rem; }
 }
 
 /* ---------- project page ---------- */

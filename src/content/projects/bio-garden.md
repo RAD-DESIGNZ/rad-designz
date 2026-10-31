@@ -1,6 +1,7 @@
 ---
 order: 16
 title: BIO Garden
+discipline: packaging
 year: 2023
 client: Bio-Garden Market
 category:
